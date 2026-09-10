@@ -1,0 +1,14 @@
+---
+import type {CollectionEntry} from 'astro:content';
+import BrandIcon from './BrandIcon.astro';
+import Text from './Text.astro';
+interface Props {c:CollectionEntry<'locales'>['data']}
+const {c}=Astro.props;
+---
+<footer class="footer">
+<div class="footer-brand"><a class="brand" href={`/${c.lang}/`}><img src="/assets/logo-cream.png" width="136" height="46" alt={c.logoAlt} loading="lazy" decoding="async"/></a><p><Text value={c.footer.body}/></p></div>
+<div class="footer-column"><p class="footer-heading">{c.footer.sitemap}</p><nav aria-label={c.footer.sitemap}>{c.nav.map(n=><a href={n.href.startsWith('#')?`/${c.lang}/${n.href}`:n.href}>{n.label}</a>)}</nav></div>
+<div class="footer-column"><p class="footer-heading">{c.footer.contact}</p><a href={`mailto:${c.contact.email}`}><bdi dir="ltr">{c.contact.email}</bdi></a><a href={c.contact.phoneHref}><bdi dir="ltr">{c.contact.phone}</bdi></a><a class="button button-outline footer-whatsapp" href={c.contact.whatsapp} target="_blank" rel="noopener noreferrer">{c.footer.whatsapp}</a></div>
+<div class="footer-column"><p class="footer-heading">{c.footer.follow}</p><div class="social-links">{c.footer.socials.map(s=><a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} title={s.label}><BrandIcon name={s.label}/></a>)}</div></div>
+<div class="footer-bottom"><p><Text value={c.footer.copyright}/></p><a href={`/${c.lang==='en'?'ar':'en'}/`} aria-label={c.ui.language}><bdi dir="ltr">EN / AR</bdi></a></div>
+</footer>

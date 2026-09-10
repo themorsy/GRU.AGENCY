@@ -1,0 +1,27 @@
+/* Original desktop type sizes, without intermediate tablet downscaling. */
+@media (min-width:768px) {
+  .hero h1 { font-size:72px; line-height:1.04; }
+  .section h2 { font-size:60px; line-height:1; }
+  .about .about-statement { font-size:46px; line-height:1.12; }
+  html[dir=rtl] .hero h1 { font-size:64px; line-height:1.22; }
+  html[dir=rtl] .section h2 { font-size:52px; line-height:1.15; }
+  html[dir=rtl] .about .about-statement { font-size:40px; line-height:1.35; }
+}
+/* Client correction: close the exceptional gap between Proof and its stats. */
+.proof > .section-heading { margin-bottom:16px; }
+.stats { align-items:start; }
+.hero-video-slot { position:absolute; inset:0; display:flex; align-items:flex-start; justify-content:flex-end; padding:110px var(--gutter) 0; z-index:0; pointer-events:none; }
+.hero-video-slot > span { border:1px dashed rgba(241,239,219,.4); border-radius:4px; padding:20px 26px; text-align:center; color:rgba(241,239,219,.72); font-size:11px; letter-spacing:.24em; text-transform:uppercase; }
+.hero-video-slot small { display:block; margin-top:6px; font-size:13px; font-weight:300; letter-spacing:normal; text-transform:none; }
+.hero-content { z-index:1; }
+@media(max-width:767px) {
+ .hero-video-slot { position:relative; padding:0; margin-bottom:24px; width:100%; }
+ .hero-video-slot > span { width:100%; font-size:12px; padding:26px 10px; }
+ .hero { flex-direction:column; align-items:stretch; padding:30px 20px 28px; }
+ .hero-actions { flex-direction:column; }
+ .stats { grid-template-columns:1fr; gap:18px; }
+ .stat { gap:12px; align-items:flex-end; }
+ .stat .accent { width:14px; height:34px; }
+ .stat-label { margin-top:2px; }
+ .proof > .section-heading { margin-bottom:16px; }
+}

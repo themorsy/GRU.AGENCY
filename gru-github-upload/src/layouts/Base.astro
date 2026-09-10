@@ -1,0 +1,20 @@
+---
+import type {CollectionEntry} from 'astro:content';
+import Header from '../components/Header.astro';
+import WhatsApp from '../components/WhatsApp.astro';
+import '../styles/global.css';
+import '../styles/refinements.css';
+interface Props{c:CollectionEntry<'locales'>['data'];thanks?:boolean}
+const {c,thanks=false}=Astro.props;
+const origin=Astro.site!.origin;
+const path=`/${c.lang}/${thanks?'thank-you/':''}`;
+const title=thanks?`${c.thanks.title} | GRU`:c.seo.title;
+const description=thanks?c.thanks.body:c.seo.description;
+const gtm=import.meta.env.PUBLIC_GTM_ID||'GTM-54CQR8HS';
+const verification=import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const schema={'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':origin+'/#organization',name:'GRU',url:origin,logo:origin+'/assets/logo-green.png',email:c.contact.email,telephone:c.contact.phone,sameAs:c.footer.socials.map(s=>s.href)},{'@type':'LocalBusiness','@id':origin+'/#business',name:'GRU',url:origin,telephone:c.contact.phone,email:c.contact.email,parentOrganization:{'@id':origin+'/#organization'},image:origin+'/assets/logo-green.png',areaServed:['Egypt','GCC','Europe']}]};
+---
+<!doctype html><html lang={c.lang} dir={c.dir}><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><meta name="description" content={description}/><meta name="theme-color" content="#1F5B33"/><link rel="canonical" href={origin+path}/><link rel="alternate" hreflang="en" href={`${origin}/en/${thanks?'thank-you/':''}`}/><link rel="alternate" hreflang="ar" href={`${origin}/ar/${thanks?'thank-you/':''}`}/><link rel="alternate" hreflang="x-default" href={`${origin}/en/${thanks?'thank-you/':''}`}/><meta property="og:type" content="website"/><meta property="og:site_name" content="GRU"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={origin+path}/><meta name="twitter:card" content="summary"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/><link rel="icon" type="image/png" href="/assets/logo-green.png"/>{c.lang==='en'&&<link rel="preload" href="/fonts/Mammoth.otf" as="font" type="font/otf" crossorigin/>}{verification&&<meta name="google-site-verification" content={verification}/>}
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g,'\\u003c')}/>
+<script is:inline define:vars={{gtm}}>window.dataLayer=window.dataLayer||[];window.dataLayer.push({'gtm.start':Date.now(),event:'gtm.js'});const tag=document.createElement('script');tag.async=true;tag.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(gtm);document.head.appendChild(tag);</script>
+</head><body data-lang={c.lang} data-thanks={thanks?'true':undefined}><noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${gtm}`} height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript><a class="skip-link" href="#main">{c.ui.skip}</a><Header c={c} minimal={thanks}/><main id="main" tabindex="-1"><slot/></main><slot name="footer"/><WhatsApp c={c}/><script>import '../scripts/site';</script></body></html>

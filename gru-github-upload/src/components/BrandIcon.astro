@@ -1,0 +1,8 @@
+---
+import {faWhatsapp,faLinkedinIn,faInstagram,faFacebookF,faTiktok} from '@fortawesome/free-brands-svg-icons';
+interface Props {name:string}
+const {name}=Astro.props;
+const icons={WhatsApp:faWhatsapp,LinkedIn:faLinkedinIn,Instagram:faInstagram,Facebook:faFacebookF,TikTok:faTiktok};
+const icon=icons[name as keyof typeof icons];
+---
+{icon&&<svg class="brand-icon" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} fill="currentColor" aria-hidden="true" focusable="false">{(Array.isArray(icon.icon[4])?icon.icon[4]:[icon.icon[4]]).map(path=><path d={path}/>)}</svg>}

@@ -1,0 +1,5 @@
+---
+interface Props {thanks?:boolean}
+const {thanks=false}=Astro.props;
+---
+<span class:list={['arches',{'arches-thanks':thanks}]} aria-hidden="true"><i></i><i></i>{!thanks&&<i></i>}</span>

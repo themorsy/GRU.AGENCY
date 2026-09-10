@@ -1,0 +1,7 @@
+---
+import type {CollectionEntry} from 'astro:content';
+import BrandIcon from './BrandIcon.astro';
+interface Props {c:CollectionEntry<'locales'>['data']}
+const {c}=Astro.props;
+---
+<a class="floating-whatsapp" href={c.contact.whatsapp} target="_blank" rel="noopener noreferrer" aria-label={`${c.ui.whatsapp} ${c.contact.phone}`}><BrandIcon name="WhatsApp"/><span>{c.ui.whatsapp}</span></a>

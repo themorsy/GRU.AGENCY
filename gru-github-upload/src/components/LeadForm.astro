@@ -1,0 +1,14 @@
+---
+import type {CollectionEntry} from 'astro:content';
+import SectionHeading from './SectionHeading.astro';
+import Text from './Text.astro';
+interface Props {c:CollectionEntry<'locales'>['data']}
+const {c}=Astro.props;
+const netlify=process.env.NETLIFY==='true';
+---
+<section id="lead" class="section lead" aria-labelledby="lead-heading"><div class="lead-intro"><SectionHeading eyebrow={c.form.eyebrow} title={c.form.title} id="lead-heading"/><p><Text value={c.form.intro}/></p><a class="contact-whatsapp" href={c.contact.whatsapp} target="_blank" rel="noopener noreferrer">{c.ui.whatsapp} <bdi dir="ltr">{c.contact.phone}</bdi></a></div>
+<form name={`gru-lead-${c.lang}`} method="POST" action={`/${c.lang}/thank-you/`} data-netlify="true" netlify-honeypot="bot-field" data-lead-form data-live={netlify?'true':'false'} data-errors={JSON.stringify(c.form.errors)} data-submit-error={c.form.submitError} data-sending={c.form.sending}>
+<input type="hidden" name="form-name" value={`gru-lead-${c.lang}`}/><input type="hidden" name="language" value={c.lang}/><input type="hidden" name="submission-id" value=""/><input type="hidden" name="service-label" value=""/><div hidden><input name="bot-field" tabindex="-1" autocomplete="off" aria-hidden="true"/></div>
+{c.form.fields.map(field=><div class:list={['field',{'field-full':field.span===2}]}><label for={field.id}>{field.label}{field.required&&<span aria-hidden="true"> *</span>}</label>{field.type==='select'?<select name={field.id} id={field.id} required={field.required} aria-describedby={`${field.id}-error`}><option value="">{field.placeholder}</option>{c.services.items.map(category=><optgroup label={category.label}>{category.items.map(service=><option value={service.id}>{service.label}</option>)}</optgroup>)}</select>:field.type==='textarea'?<textarea id={field.id} name={field.id} placeholder={field.placeholder} rows="3" maxlength="3000" aria-describedby={`${field.id}-error`}/>:<input id={field.id} name={field.id} type={field.type} placeholder={field.placeholder} required={field.required} maxlength={field.id==='email'?254:field.id==='mobile'?40:120} autocomplete={field.id==='mobile'?'tel':field.id==='company'?'organization':field.id} inputmode={field.id==='mobile'?'tel':field.id==='email'?'email':'text'} dir={field.id==='email'||field.id==='mobile'?'ltr':undefined} aria-describedby={`${field.id}-error`}/>}<p class="field-error" id={`${field.id}-error`} aria-live="polite"></p></div>)}
+<p class="submit-error field-full" role="alert" data-submit-error-message hidden></p><button class="button form-submit" type="submit">{c.ui.book}</button></form></section>
+<script>import '../scripts/form';</script>
