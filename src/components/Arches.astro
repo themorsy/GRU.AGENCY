@@ -1,0 +1,44 @@
+---
+/**
+ * The section-opener arch cluster: three arches, bottom-aligned, 7px apart —
+ * outline 20x42, solid 18x27, outline 14x36. Cream on dark grounds (handled by
+ * .on-dark / .section--ink in global.css).
+ *
+ * Purely decorative, so the whole cluster is aria-hidden. Never placed over
+ * text or over the hero video.
+ */
+interface Props {
+  /** 'pair' is the two-arch variant used on the thank-you pages. */
+  variant?: 'cluster' | 'pair';
+  class?: string;
+}
+const { variant = 'cluster', class: className = '' } = Astro.props;
+
+const cluster = [
+  { w: 20, h: 42, solid: false },
+  { w: 18, h: 27, solid: true },
+  { w: 14, h: 36, solid: false },
+];
+const pair = [
+  { w: 34, h: 66, solid: false },
+  { w: 34, h: 44, solid: true },
+];
+const shapes = variant === 'pair' ? pair : cluster;
+---
+
+<div class:list={['arches', className]} aria-hidden="true" data-variant={variant}>
+  {
+    shapes.map((s) => (
+      <span
+        class:list={['arch', s.solid ? 'arch--solid' : 'arch--outline']}
+        style={`width:${s.w}px;height:${s.h}px`}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .arches[data-variant='pair'] {
+    gap: 8px;
+  }
+</style>

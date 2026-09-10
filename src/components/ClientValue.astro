@@ -1,0 +1,96 @@
+---
+/**
+ * §7 What You Get As a GRU Client.
+ * Cream, 96px 56px. Two-column grid, 44px 60px gaps, four items; each an
+ * 18x40 green arch bar beside a Mammoth-caps 26px title and a 16px/1.7 body.
+ */
+import Arches from './Arches.astro';
+import ArchBar from './ArchBar.astro';
+import { getContent, type Locale } from '../content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const c = getContent(locale);
+---
+
+<section id="client-value" class="value" aria-labelledby="value-heading">
+  <div class="opener value__opener">
+    <Arches />
+    <span class="eyebrow">{c.clientValue.eyebrow}</span>
+    <h2 id="value-heading" class="h2">{c.clientValue.heading}</h2>
+  </div>
+
+  <div class="value__grid">
+    {
+      c.clientValue.items.map((item) => (
+        <div class="value__item">
+          <ArchBar w={18} h={40} offset={6} />
+          <div class="value__text">
+            <h3 class="h3">{item.title}</h3>
+            <p class="value__body">{item.body}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .value {
+    background: var(--cream);
+    padding: var(--section-y) var(--gutter);
+  }
+
+  .value__opener {
+    max-width: 900px;
+    margin-bottom: 56px;
+  }
+
+  .value__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 44px 60px;
+  }
+
+  .value__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .value__text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .value__body {
+    font-weight: 300;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    color: var(--body);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 1023px) {
+    .value__grid {
+      gap: 32px 40px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .value__opener {
+      margin-bottom: 26px;
+    }
+    .value__grid {
+      grid-template-columns: 1fr;
+      gap: 26px;
+    }
+    .value__item {
+      gap: 14px;
+    }
+  }
+</style>

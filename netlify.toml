@@ -1,0 +1,67 @@
+# ---------------------------------------------------------------------------
+# GRU website — Netlify deployment
+#
+# Forms: the lead form is a static HTML form carrying name="gru-lead" and
+# data-netlify="true", so Netlify's build bot registers it at deploy time.
+# Submissions appear under Forms > gru-lead in the site dashboard, with a
+# `locale` field distinguishing English from Arabic. Add notification emails
+# there. The `bot-field` honeypot is declared on the form.
+# ---------------------------------------------------------------------------
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# ---- Language entry point -------------------------------------------------
+# / is not a page. Arabic-preferring browsers go to /ar/, everyone else /en/.
+# 302 rather than 301: it is content negotiation, and must not be cached as a
+# permanent answer for every visitor.
+
+[[redirects]]
+  from = "/"
+  to = "/ar/"
+  status = 302
+  force = true
+  conditions = { Language = ["ar"] }
+
+[[redirects]]
+  from = "/"
+  to = "/en/"
+  status = 302
+  force = true
+
+# Bare convenience paths
+[[redirects]]
+  from = "/thank-you"
+  to = "/en/thank-you/"
+  status = 302
+
+# ---- Caching --------------------------------------------------------------
+# Astro fingerprints everything under /_astro, and the fonts are versioned by
+# filename, so both are safe to cache hard.
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"

@@ -1,0 +1,166 @@
+---
+/**
+ * §2 Hero.
+ *
+ * Full-bleed background showreel with a black fallback ground and the
+ * 180deg rgba(0,0,0,.45) → rgba(0,0,0,.75) scrim. That scrim is what holds
+ * body text at 4.5:1 over arbitrary video frames — do not remove it.
+ *
+ * Content is bottom-aligned, min-height 680px, padding 110px 56px 64px.
+ * No arch graphics here: they were removed so nothing sits over the video.
+ *
+ * The video never blocks first paint. Sources are held in data-src and
+ * attached after load by ../scripts/hero-video.ts; until the client supplies
+ * the asset, the marked slot renders and no media request is made at all.
+ */
+import { getContent, site, type Locale } from '../content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const c = getContent(locale);
+
+const headline = site.useAlternativeH1 ? c.seo.h1Alternative : c.hero.headline;
+const hasVideo = site.heroVideo.sources.length > 0;
+---
+
+<section class="hero on-dark" data-section="hero">
+  <div class="hero__media" aria-hidden="true">
+    {
+      hasVideo ? (
+        <video
+          class="hero__video"
+          data-gru-hero-video
+          poster={site.heroVideo.poster ?? undefined}
+          muted
+          loop
+          playsinline
+          preload="none"
+          tabindex="-1"
+          data-sources={JSON.stringify(site.heroVideo.sources)}
+        />
+      ) : (
+        <div class="hero__slot">
+          <span class="hero__slot-label">{c.hero.videoLabel}</span>
+        </div>
+      )
+    }
+    <div class="hero__scrim"></div>
+  </div>
+
+  <div class="hero__content">
+    <h1 class="hero__headline">{headline}</h1>
+    <p class="hero__supporting">{c.hero.supporting}</p>
+    <div class="hero__ctas">
+      <a href="#lead" class="btn btn--green">{c.hero.primaryCta}</a>
+      <a href="#work" class="btn btn--outline-cream">{c.hero.secondaryCta}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: var(--ink);
+    color: var(--on-dark);
+    min-height: var(--hero-min);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--hero-pt) var(--gutter) var(--hero-pb);
+    overflow: hidden;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+  }
+
+  .hero__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Placeholder while the showreel is outstanding. Mirrors the marked slot in
+     the mockup; carries no network cost. */
+  .hero__slot {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: var(--hero-pt) var(--gutter) 0;
+  }
+  .hero__slot-label {
+    border: 1px dashed var(--on-dark-outline);
+    border-radius: var(--r-sm);
+    padding: 18px 24px;
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: var(--tt-ui);
+    color: var(--on-dark-muted);
+  }
+
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    background: var(--hero-scrim);
+  }
+
+  .hero__content {
+    position: relative;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .hero__headline {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-display);
+    font-size: var(--fs-h1);
+    line-height: var(--lh-h1);
+    letter-spacing: var(--ls-display);
+    text-transform: var(--tt-display);
+    text-wrap: balance;
+  }
+
+  .hero__supporting {
+    max-width: 660px;
+    font-weight: 300;
+    font-size: var(--fs-body-lg);
+    line-height: var(--lh-body-lg);
+    color: var(--on-dark-body);
+  }
+
+  .hero__ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  :global(html[lang='ar']) .hero__supporting {
+    max-width: 680px;
+  }
+
+  @media (max-width: 767px) {
+    .hero__content {
+      gap: 18px;
+    }
+    .hero__ctas .btn {
+      flex: 1 1 auto;
+    }
+    .hero__slot {
+      align-items: center;
+      justify-content: center;
+      padding: var(--gutter);
+    }
+  }
+</style>
+
+<script>
+  import '../scripts/hero-video';
+</script>

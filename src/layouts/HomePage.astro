@@ -1,0 +1,47 @@
+---
+/**
+ * The homepage, composed once and rendered for both locales.
+ *
+ * Section order is the client's reordered homepage from the developer change
+ * list: Hero → Proof/Logos → Services → Selected Work → CTA → Client Value →
+ * How We Work → Who We Are → Form → Footer.
+ */
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Proof from '../components/Proof.astro';
+import Services from '../components/Services.astro';
+import SelectedWork from '../components/SelectedWork.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ClientValue from '../components/ClientValue.astro';
+import Method from '../components/Method.astro';
+import WhoWeAre from '../components/WhoWeAre.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFab from '../components/WhatsAppFab.astro';
+import type { Locale } from '../content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+
+<Base locale={locale} pageKey="home" structuredData>
+  <div class="page">
+    <Header locale={locale} />
+    <main id="main">
+      <Hero locale={locale} />
+      <Proof locale={locale} />
+      <Services locale={locale} />
+      <SelectedWork locale={locale} />
+      <CtaBand locale={locale} />
+      <ClientValue locale={locale} />
+      <Method locale={locale} />
+      <WhoWeAre locale={locale} />
+      <LeadForm locale={locale} />
+    </main>
+    <Footer locale={locale} />
+    <WhatsAppFab locale={locale} />
+  </div>
+</Base>

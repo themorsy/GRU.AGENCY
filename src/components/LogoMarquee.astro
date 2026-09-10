@@ -1,0 +1,133 @@
+---
+/**
+ * Client logo marquee (part of §3).
+ *
+ * Framed by hairline rules top and bottom with 26px vertical padding. Exactly
+ * four logos are visible per viewport at any width: each slot is 25% of the
+ * strip, the list is rendered twice, and the track translates -50% over ~26s
+ * linear, infinite — so the loop is seamless with no jump at the wrap.
+ *
+ * Paused on hover. Under prefers-reduced-motion the animation is switched off
+ * entirely and the strip becomes horizontally scrollable instead, so the
+ * content is still reachable. The duplicated half is aria-hidden so screen
+ * readers do not hear every logo twice.
+ */
+import { getContent, site, type Locale } from '../content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const c = getContent(locale);
+
+const logos = site.clientLogos;
+/* Two copies of the list; -50% therefore lands exactly on the seam. */
+const slots = [
+  ...logos.map((l, i) => ({ ...l, key: `a${i}`, clone: false })),
+  ...logos.map((l, i) => ({ ...l, key: `b${i}`, clone: true })),
+];
+---
+
+<div class="marquee" role="group" aria-label={c.proof.logosLabel}>
+  <div class="marquee__track" style={`--slot-count:${slots.length}`}>
+    {
+      slots.map((slot) => (
+        <div class="marquee__slot" aria-hidden={slot.clone ? 'true' : undefined}>
+          {slot.src ? (
+            <img src={slot.src} alt={slot.alt} loading="lazy" decoding="async" class="marquee__logo" />
+          ) : (
+            <span class="marquee__placeholder">{c.proof.logoSlotLabel}</span>
+          )}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 26px 0;
+  }
+
+  .marquee__track {
+    display: flex;
+    /* Each slot is a quarter of the strip, so four are in view. */
+    width: calc(var(--slot-count) * 25%);
+    animation: gru-marquee var(--marquee-duration) linear infinite;
+  }
+
+  .marquee:hover .marquee__track,
+  .marquee:focus-within .marquee__track {
+    animation-play-state: paused;
+  }
+
+  .marquee__slot {
+    flex: 0 0 calc(100% / var(--slot-count));
+    padding: 0 16px;
+  }
+
+  .marquee__logo {
+    height: var(--logo-slot-h);
+    width: 100%;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.75;
+    transition: filter 0.2s ease, opacity 0.2s ease;
+  }
+  .marquee:hover .marquee__logo {
+    filter: none;
+    opacity: 1;
+  }
+
+  .marquee__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--logo-slot-h);
+    border: 1px dashed var(--rule);
+    border-radius: 3px;
+    font-size: var(--fs-micro);
+    letter-spacing: 0.18em;
+    text-transform: var(--tt-ui);
+    color: var(--quiet);
+    text-align: center;
+  }
+
+  :global(html[lang='ar']) .marquee__placeholder {
+    letter-spacing: normal;
+  }
+
+  @keyframes gru-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* RTL: the track scrolls the other way so logos enter from the correct edge. */
+  :global(html[dir='rtl']) .marquee__track {
+    animation-name: gru-marquee-rtl;
+  }
+  @keyframes gru-marquee-rtl {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      overflow-x: auto;
+    }
+    .marquee__track {
+      animation: none;
+    }
+  }
+</style>

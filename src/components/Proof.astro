@@ -1,0 +1,117 @@
+---
+/**
+ * §3 Proof — stats + client logo marquee.
+ *
+ * Cream ground, 72px 56px 56px, 1px rule bottom border. The section has no
+ * visible H2 in the design (arch cluster + eyebrow only), so the H2 required
+ * by the heading structure is present but visually hidden — the outline stays
+ * valid without adding anything to the layout.
+ */
+import Arches from './Arches.astro';
+import ArchBar from './ArchBar.astro';
+import LogoMarquee from './LogoMarquee.astro';
+import { getContent, type Locale } from '../content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const c = getContent(locale);
+---
+
+<section id="proof" class="proof" aria-labelledby="proof-heading">
+  <div class="opener proof__opener">
+    <Arches />
+    <span class="eyebrow">{c.proof.eyebrow}</span>
+    <h2 id="proof-heading" class="visually-hidden">{c.proof.heading}</h2>
+  </div>
+
+  <div class="proof__stats">
+    {
+      c.proof.stats.map((s) => (
+        <div class="stat">
+          <ArchBar w={26} h={64} />
+          <div class="stat__text">
+            <span class:list={['stat__value', { ltr: s.numeric }]}>{s.value}</span>
+            <span class="stat__label">{s.label}</span>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <LogoMarquee locale={locale} />
+</section>
+
+<style>
+  .proof {
+    background: var(--cream);
+    padding: var(--proof-pt) var(--gutter) var(--proof-pb);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .proof__opener {
+    margin-bottom: 44px;
+  }
+
+  .proof__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+    padding-bottom: 56px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+  }
+
+  .stat__text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .stat__value {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-display);
+    font-size: var(--fs-stat);
+    line-height: var(--lh-stat);
+    text-transform: var(--tt-display);
+    color: var(--ink-soft);
+  }
+
+  .stat__label {
+    font-size: var(--fs-meta);
+    letter-spacing: var(--ls-meta);
+    text-transform: var(--tt-ui);
+    color: var(--quiet);
+  }
+
+  @media (max-width: 1023px) {
+    .proof__stats {
+      gap: 24px;
+      padding-bottom: 40px;
+    }
+    .stat {
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .proof__opener {
+      margin-bottom: 26px;
+    }
+    .proof__stats {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding-bottom: 26px;
+    }
+    .stat :global(.arch-bar) {
+      width: 18px !important;
+      height: 44px !important;
+    }
+  }
+</style>

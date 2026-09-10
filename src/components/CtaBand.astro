@@ -1,0 +1,60 @@
+---
+/**
+ * §6 CTA band — the extra "Book a Call" the change list places directly after
+ * the portfolio. Green ground, cream text, 72px 56px, statement and button on
+ * one wrapping row. No graphics behind the copy.
+ */
+import { getContent, type Locale } from '../content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const c = getContent(locale);
+---
+
+<section class="cta-band on-dark">
+  <p class="cta-band__statement">{c.ctaBand.statement}</p>
+  <a href="#lead" class="btn btn--cream cta-band__btn">{c.ctaBand.button}</a>
+</section>
+
+<style>
+  .cta-band {
+    background: var(--green);
+    color: var(--cream);
+    padding: var(--band-y) var(--gutter);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+  }
+
+  .cta-band__statement {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-display);
+    font-size: var(--fs-cta);
+    line-height: var(--lh-cta);
+    letter-spacing: var(--ls-display);
+    text-transform: var(--tt-display);
+    max-width: 760px;
+    text-wrap: pretty;
+  }
+
+  .cta-band__btn {
+    padding: 18px 38px;
+  }
+
+  :global(html[lang='ar']) .cta-band__statement {
+    max-width: 800px;
+  }
+
+  @media (max-width: 767px) {
+    .cta-band {
+      gap: 20px;
+    }
+    .cta-band__btn {
+      width: 100%;
+    }
+  }
+</style>

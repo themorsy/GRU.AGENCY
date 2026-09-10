@@ -1,0 +1,114 @@
+---
+/**
+ * §13 Thank-you page, rendered for both locales on their own URLs.
+ *
+ * Minimal: header with the logo only, then a centred block (max-width 640px,
+ * 24px gaps) — two-arch cluster (34x66 outline + 34x44 solid), Mammoth caps
+ * 76px heading, 18px/1.75 body, green pill back to the homepage.
+ *
+ * The GTM conversion event fires on load, per the change list. Kept out of the
+ * index and out of the sitemap: it is a post-conversion page, not a landing
+ * page, and the hreflang pair still points EN <-> AR for anyone who lands here.
+ */
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Arches from '../components/Arches.astro';
+import WhatsAppFab from '../components/WhatsAppFab.astro';
+import { getContent, homeHref, site, type Locale } from '../content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const c = getContent(locale);
+---
+
+<Base
+  locale={locale}
+  pageKey="thank-you"
+  title={c.thankYou.title}
+  description={c.thankYou.description}
+  noindex>
+  <div class="page thanks-page">
+    <Header locale={locale} minimal />
+    <main id="main" class="thanks">
+      <div class="thanks__inner">
+        <Arches variant="pair" class="thanks__arches" />
+        <h1 class="thanks__heading">{c.thankYou.heading}</h1>
+        <p class="thanks__body">{c.thankYou.body}</p>
+        <a href={homeHref(locale)} class="btn btn--green thanks__cta">{c.thankYou.cta}</a>
+      </div>
+    </main>
+    <WhatsAppFab locale={locale} />
+  </div>
+</Base>
+
+<script is:inline define:vars={{ eventName: site.conversionEvent, locale }}>
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: eventName, locale: locale });
+</script>
+
+<style>
+  .thanks-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+  }
+
+  .thanks {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cream);
+    padding: 100px var(--gutter);
+  }
+
+  .thanks__inner {
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .thanks__arches {
+    margin-bottom: 8px;
+  }
+
+  .thanks__heading {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-display);
+    font-size: var(--fs-thanks);
+    line-height: var(--lh-thanks);
+    letter-spacing: var(--ls-display);
+    text-transform: var(--tt-display);
+  }
+
+  .thanks__body {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: var(--lh-body-lg);
+    color: var(--body);
+  }
+
+  .thanks__cta {
+    margin-top: 8px;
+  }
+
+  @media (max-width: 767px) {
+    .thanks {
+      padding: 56px var(--gutter);
+      align-items: flex-start;
+    }
+    .thanks__inner {
+      gap: 18px;
+    }
+    .thanks__body {
+      font-size: 15px;
+    }
+    .thanks__cta {
+      width: 100%;
+    }
+  }
+</style>

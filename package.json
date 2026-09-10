@@ -1,0 +1,31 @@
+{
+  "name": "gru-website",
+  "version": "1.0.0",
+  "description": "GRU marketing website — EN/AR static site (Astro).",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "build:fast": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/cairo": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
+    "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "playwright": "^1.63.0",
+    "typescript": "^6.0.3"
+  },
+  "private": true,
+  "type": "module"
+}

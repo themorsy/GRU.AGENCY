@@ -1,0 +1,173 @@
+---
+/**
+ * §8 How We Work.
+ *
+ * Black ground, cream text, 96px 56px. Five arch-topped cards in a 5-column
+ * grid, 20px gap, bottom-aligned with staggered min-heights
+ * (300/330/360/330/380) so the row reads as a skyline. Card: 1px rule-dark
+ * border, radius 999px 999px 4px 4px, padding 80px 30px 26px, centred content.
+ *
+ * The stagger is desktop-only: on mobile the cards go 2-up, keep their arch
+ * tops and drop the height differences, as the handoff specifies.
+ */
+import Arches from './Arches.astro';
+import { getContent, type Locale } from '../content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const c = getContent(locale);
+---
+
+<section id="method" class="method on-dark" aria-labelledby="method-heading">
+  <div class="section-head method__head">
+    <div class="opener">
+      <Arches />
+      <span class="eyebrow">{c.method.eyebrow}</span>
+      <h2 id="method-heading" class="h2">{c.method.heading}</h2>
+    </div>
+    <p class="method__supporting">{c.method.supporting}</p>
+  </div>
+
+  <ol class="method__grid">
+    {
+      c.method.steps.map((step) => (
+        <li class="step" style={`--step-h:${step.height}`}>
+          <span class="step__num">{step.num}</span>
+          <h3 class="step__title">{step.title}</h3>
+          <p class="step__body">{step.body}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .method {
+    background: var(--ink);
+    color: var(--on-dark);
+    padding: var(--section-y) var(--gutter);
+  }
+
+  .method__head {
+    margin-bottom: 56px;
+  }
+
+  .method__supporting {
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--on-dark-muted);
+    max-width: 340px;
+    text-align: end;
+  }
+
+  .method__grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 20px;
+    align-items: end;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid var(--rule-dark);
+    border-radius: var(--r-card-arch);
+    /* Spec says 80px 30px 26px. "UNDERSTAND" in Mammoth 20px measures 196.7px,
+       and 30px inline padding leaves only 189.6px at 1440 — the mockup breaks it
+       mid-word as "UNDERSTAN / D". 24px gives 199.6px, so the title lands at the
+       full 20px and stays on one line. Deviation: 6px per side. */
+    padding: 80px 24px 26px;
+    min-height: var(--step-h);
+    text-align: center;
+    /* Lets the title size itself against this card, see .step__title. */
+    container-type: inline-size;
+  }
+
+  .step__num {
+    font-size: var(--fs-num);
+    letter-spacing: var(--ls-num);
+    color: var(--on-dark-faint);
+  }
+
+  .step__title {
+    font-family: var(--ff-display);
+    font-weight: var(--fw-subhead);
+    /* 20px wherever the card can hold the longest single word, and no larger.
+       Mammoth sets "UNDERSTAND" at 9.84x the font size, so a title fits on one
+       line while font-size <= 10.1cqi (cqi = 1% of this card's content width).
+       Between the fixed breakpoints below the grid is fluid, and this is what
+       guarantees no step title ever breaks mid-word at an in-between width. */
+    font-size: min(var(--fs-h3-card), 10.1cqi);
+    line-height: var(--lh-h3-card);
+    text-transform: var(--tt-display);
+    /* Backstop only; the rule above should keep it from ever triggering. */
+    overflow-wrap: anywhere;
+  }
+
+  .step__body {
+    font-weight: 300;
+    font-size: var(--fs-body-sm);
+    line-height: var(--lh-body-sm);
+    color: var(--on-dark-label);
+  }
+
+  :global(html[lang='ar']) .method__supporting {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* The staggered five-across skyline is a 1440 composition — the page is
+     capped at 1440, so below that the row goes three-up and level. */
+  @media (max-width: 1439px) {
+    .method__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+    }
+    .step {
+      min-height: 300px;
+      padding: 56px 24px 24px;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .method__supporting {
+      text-align: start;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .method__head {
+      margin-bottom: 26px;
+    }
+    /* Stagger dropped; arch tops kept. */
+    .method__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .step {
+      min-height: 200px;
+      padding: 40px 16px 20px;
+      gap: 8px;
+    }
+  }
+
+  /* Narrow phones: two-up leaves the cards too tight for the arch to read, so
+     they stack. */
+  @media (max-width: 479px) {
+    .method__grid {
+      grid-template-columns: 1fr;
+    }
+    .step {
+      min-height: 0;
+      padding: 48px 24px 24px;
+    }
+  }
+</style>
