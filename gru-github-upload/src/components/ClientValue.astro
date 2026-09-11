@@ -1,7 +1,0 @@
----
-import type {CollectionEntry} from 'astro:content';
-import SectionHeading from './SectionHeading.astro';
-interface Props {c:CollectionEntry<'locales'>['data']}
-const {c}=Astro.props;
----
-<section id="value" class="section client-value" aria-labelledby="value-heading"><SectionHeading eyebrow={c.value.eyebrow} title={c.value.title} id="value-heading"/><div class="value-grid">{c.value.items.map(v=><article class="value-item"><span class="accent" aria-hidden="true"></span><div><h3>{v.title}</h3><p>{v.body}</p></div></article>)}</div></section>

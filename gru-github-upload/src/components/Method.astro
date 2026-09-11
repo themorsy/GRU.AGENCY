@@ -1,7 +1,0 @@
----
-import type {CollectionEntry} from 'astro:content';
-import SectionHeading from './SectionHeading.astro';
-interface Props {c:CollectionEntry<'locales'>['data']}
-const {c}=Astro.props;
----
-<section id="method" class="section dark method" aria-labelledby="method-heading"><div class="section-top"><SectionHeading eyebrow={c.method.eyebrow} title={c.method.title} id="method-heading"/><p class="method-support">{c.method.support}</p></div><ol class="method-grid">{c.method.items.map(step=><li class="method-card" style={`--step-height:${step.h}`}><p class="method-number"><bdi dir="ltr">{step.num}</bdi></p><h3>{step.title}</h3><p class="method-body">{step.body}</p></li>)}</ol></section>

@@ -1,7 +1,0 @@
----
-import Arches from './Arches.astro';
-import Text from './Text.astro';
-interface Props { eyebrow:string; title?:string; id?:string }
-const {eyebrow,title,id}=Astro.props;
----
-<div class="section-heading"><Arches/><p class="eyebrow" id={!title?id:undefined}><Text value={eyebrow}/></p>{title&&<h2 id={id}><Text value={title}/></h2>}</div>

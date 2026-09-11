@@ -1,8 +1,0 @@
----
-import type {CollectionEntry} from 'astro:content';
-import Arches from './Arches.astro';
-import Text from './Text.astro';
-interface Props {c:CollectionEntry<'locales'>['data']}
-const {c}=Astro.props;
----
-<section id="about" class="section tint about" aria-labelledby="about-heading"><div class="about-content"><Arches/><p class="eyebrow"><Text value={c.about.eyebrow}/></p><h2 id="about-heading" class="about-statement"><Text value={c.about.statement}/></h2><p class="about-body"><Text value={c.about.body}/></p></div></section>

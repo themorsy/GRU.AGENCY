@@ -1,9 +1,0 @@
----
-import type {CollectionEntry} from 'astro:content';
-interface Props{c:CollectionEntry<'locales'>['data'];minimal?:boolean}
-const {c,minimal=false}=Astro.props;
-const home=`/${c.lang}/`;
-const href=(value:string)=>value.startsWith('#')?home+value:value;
----
-<div class="header-reserve"><header class="site-header" data-header><div class="header-inner"><a class="brand" href={home}><img src="/assets/logo-green.png" width="112" height="38" alt={c.logoAlt}/></a>{!minimal&&<><nav class="desktop-nav" aria-label={c.ui.navigation}>{c.nav.map(n=><a href={href(n.href)}>{n.label}</a>)}</nav><div class="header-actions"><a class="language" href={`/${c.lang==='en'?'ar':'en'}/`} aria-label={c.ui.language}><bdi dir="ltr">EN / AR</bdi></a><a class="button" href={home+'#lead'}>{c.ui.book}</a></div><button class="menu-toggle" aria-label={c.ui.menu} aria-expanded="false" aria-controls="mobile-menu" data-menu-open><span></span><span></span></button></>}</div></header></div>
-{!minimal&&<dialog id="mobile-menu" class="mobile-menu" aria-label={c.ui.navigation}><button class="dialog-close" data-menu-close aria-label={c.ui.close}>×</button><nav aria-label={c.ui.navigation}>{c.nav.map(n=><a href={href(n.href)}>{n.label}</a>)}</nav><a class="language" href={`/${c.lang==='en'?'ar':'en'}/`}>{c.ui.language}</a><a class="button" href={home+'#lead'}>{c.ui.book}</a></dialog>}
