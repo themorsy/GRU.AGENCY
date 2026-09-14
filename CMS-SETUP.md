@@ -33,6 +33,27 @@ GitHub gives you a **Client ID** and lets you generate a **Client Secret**. Both
 
 Anyone who logs into `/admin/` needs **write access to the `themorsy/GRU.AGENCY` GitHub repo** — that's what the OAuth scope (`repo`) grants access through.
 
+### 1a. Restrict the CMS login page to approved people
+
+GitHub OAuth identifies the person who is already at the CMS; GitHub repository **Write** access controls whether that person can save. It does not stop the general public from seeing the GitHub login button. Use Cloudflare Access for that outer gate.
+
+For the current editor, create a Cloudflare Zero Trust Access application with this policy:
+
+| Setting | Value |
+|---|---|
+| Application type | Self-hosted |
+| Public hostname | `gru-agency.mod-morsy.workers.dev` |
+| Path | `/admin/*` |
+| Identity method | One-time PIN (email) |
+| Policy action | Allow |
+| Include | Emails → `mod.morsy@gmail.com` |
+
+Create a second application with the same identity method and allow rule for `/api/cms/*`. This lets the authenticated CMS communicate with its own OAuth routes while keeping those routes unavailable to strangers. Access is deny-by-default, so do not add an Everyone rule.
+
+Then ensure that the GitHub account attached to `mod.morsy@gmail.com` has **Write** (or Admin) access to `themorsy/GRU.AGENCY`. A GitHub account with only Read or Triage access can pass the Cloudflare gate but cannot write CMS changes. Cloudflare cannot evaluate personal GitHub repository collaborator roles from an email address; the two checks intentionally remain separate.
+
+Do not add editor invitations inside the CMS. That would allow an existing content editor to grant new access. Add or remove the email in Cloudflare Access, and add or remove the GitHub collaborator separately.
+
 ### 2. Cloudinary API key (for the media library)
 
 The cloud name is fixed in code (`r8i4m3mq`) — you only need the **API key** from that Cloudinary account.
@@ -58,4 +79,6 @@ The cloud name is fixed in code (`r8i4m3mq`) — you only need the **API key** f
 
 - `/admin/` is noindex/no-store at the Worker level regardless of `SITE_INDEXABLE` — safe to leave live during preview.
 - Content edited through `/admin/` writes back to `src/content/pages/*.json` via GitHub commits on `main` (through the CMS's GitHub backend) — it is the same data layer the homepage renders from, not a separate store.
+- **Pages** can be saved as drafts with the Published switch off. A published page becomes `/en/<page-url-name>/` and/or `/ar/<page-url-name>/` according to Published languages. Each page exposes a validated GTM container-ID field, search/social fields, canonical URL, indexing and sitemap settings.
+- **Landing page templates** hold reusable arrangements of the approved sections. Create and save one in the Landing page templates collection, wait for the normal Git/Cloudflare rebuild, then select it with **Use saved template…** while creating a page. Templates do not create public URLs and cannot introduce unapproved section types.
 - This file's source of truth is `worker/index.ts` (`/api/cms/config`, `/api/cms/auth`, `/api/cms/callback`) and `public/admin/editor.js` — if the setup ever drifts, re-derive from there rather than from memory.

@@ -513,7 +513,14 @@
       },
       "seo": {
         "title": "GRU | Digital Marketing Agency in Egypt, GCC & Europe",
-        "description": "GRU is a data-driven digital marketing agency in Egypt helping businesses across Egypt and the GCC grow through strategy, content, performance marketing, branding, e-commerce and production."
+        "description": "GRU is a data-driven digital marketing agency in Egypt helping businesses across Egypt and the GCC grow through strategy, content, performance marketing, branding, e-commerce and production.",
+        "indexable": true,
+        "includeInSitemap": true,
+        "socialTitle": "",
+        "socialDescription": "",
+        "socialImage": "",
+        "socialImageAlt": "",
+        "canonicalUrl": ""
       },
       "services": {
         "eyebrow": "Services",
@@ -1146,7 +1153,14 @@
       },
       "seo": {
         "title": "GRU | وكالة تسويق رقمي في مصر ودول الخليج",
-        "description": "GRU وكالة تسويق رقمي متكاملة في مصر، تساعد الشركات في مصر ودول الخليج على النمو من خلال الاستراتيجية، المحتوى، الإعلانات، العلامات التجارية، التجارة الإلكترونية والإنتاج."
+        "description": "GRU وكالة تسويق رقمي متكاملة في مصر، تساعد الشركات في مصر ودول الخليج على النمو من خلال الاستراتيجية، المحتوى، الإعلانات، العلامات التجارية، التجارة الإلكترونية والإنتاج.",
+        "indexable": true,
+        "includeInSitemap": true,
+        "socialTitle": "",
+        "socialDescription": "",
+        "socialImage": "",
+        "socialImageAlt": "",
+        "canonicalUrl": ""
       },
       "services": {
         "eyebrow": "الخدمات",
@@ -1274,5 +1288,6 @@
       },
       "logoAlt": "GRU — Growth Marketing Agency"
     }
-  }
+  },
+  "gtmId": ""
 }

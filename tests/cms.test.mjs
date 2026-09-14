@@ -57,14 +57,17 @@ test('admin and CMS API responses are always noindex, nofollow and uncached',asy
 
 test('CMS editor exposes bilingual filtering, section ordering, campaigns and accessible media validation',()=>{
   const editor=fs.readFileSync('public/admin/editor.js','utf8');
-  for(const text of ['English only','Arabic only','Both','sectionOrder',"key==='projects'", "key==='gallery'",'Published','supported media URL','accessible description'])assert.ok(editor.includes(text),text);
+  for(const text of ['English only','Arabic only','Both','sectionOrder',"key==='projects'", "key==='gallery'",'Published','supported media URL','accessible description','Google Tag Manager container ID','pageTemplates','Use saved template…','socialImage'])assert.ok(editor.includes(text),text);
   assert.ok(editor.includes("folder:'src/content/pages'"));
   assert.ok(editor.includes('create:true'));
   assert.ok(editor.includes("font-family:'Arabic Typesetting'" )===false,'Typography belongs in the stylesheet.');
   assert.ok(!editor.includes('784414732372788'),'Old Cloudinary credentials must not remain in the editor.');
   assert.ok(!editor.includes('Mammoth'),'Arabic CMS fields must not load Mammoth.');
-  assert.ok(fs.readFileSync('public/admin/editor.css','utf8').includes("'Arabic Typesetting'"));
+  const editorCss=fs.readFileSync('public/admin/editor.css','utf8');
+  assert.ok(editorCss.includes('font-family:Sukar'),'Arabic CMS fields use the readable Sukar webfont.');
+  assert.ok(!editorCss.includes('Arabic Typesetting'),'Arabic Typesetting is reserved for public display headings.');
   const admin=fs.readFileSync('src/pages/admin/index.astro','utf8');
   assert.ok(admin.includes('decap-cms@3.16.0'));
   assert.ok(!admin.includes('react@18.3.1'),'Decap must own the single React runtime used by the custom widget.');
+  assert.ok(fs.existsSync('src/pages/admin/page-templates.json.ts'),'Saved templates have a static admin endpoint.');
 });

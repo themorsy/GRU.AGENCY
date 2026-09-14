@@ -1,5 +1,8 @@
+@font-face{font-family:Sukar;src:url('/admin/fonts/sukar-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:Sukar;src:url('/admin/fonts/sukar-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
 :root{--studio-cream:#f1efdb;--studio-green:#1f5b33;--studio-rule:#c8cbb9}
-body{background:var(--studio-cream);font-family:system-ui,sans-serif}
+body,#nc-root{background:var(--studio-cream);font-family:system-ui,sans-serif;color:#26372c}
+#nc-root a{color:var(--studio-green)}#nc-root button{border-radius:8px}#nc-root [role=main]{background:var(--studio-cream)}
 .gru-editor{font:15px/1.6 system-ui,sans-serif;color:#26372c;background:var(--studio-cream);padding:20px;border-radius:12px;min-width:0}
 .gru-editor button,.gru-editor input,.gru-editor select,.gru-editor textarea{font:inherit;min-height:44px;border:1px solid var(--studio-rule);border-radius:8px;padding:8px 12px;background:#e6e4ce;color:#26372c;max-width:100%}
 .gru-editor button{cursor:pointer}.gru-editor button:disabled{opacity:.5;cursor:default}
@@ -12,7 +15,8 @@ body{background:var(--studio-cream);font-family:system-ui,sans-serif}
 .gru-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;min-width:0}
 .gru-field>span,.gru-editor legend{font-weight:600}.gru-field small,.gru-editor .help{font-size:13px;color:#4a5749}
 .gru-editor textarea{min-height:100px;resize:vertical;width:100%}
-.gru-editor [dir=rtl]{font-family:'Arabic Typesetting',serif;font-size:20px;line-height:1.7;text-align:right}
+.gru-editor [dir=rtl]{font-family:Sukar,sans-serif;font-size:18px;line-height:1.7;text-align:right}
+.gru-editor .gru-check{display:flex;align-items:center;gap:10px;margin:14px 0;font-weight:600}.gru-editor .gru-check input{min-height:20px;width:20px;padding:0;accent-color:var(--studio-green)}
 .gru-editor input[dir=ltr],.gru-editor textarea[dir=ltr]{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;direction:ltr;text-align:left}
 .gru-editor details{padding:12px;border:1px solid var(--studio-rule);border-radius:8px;margin-bottom:10px}
 .gru-editor summary{cursor:pointer;min-height:44px;font-weight:600}.gru-editor fieldset{border:0;padding:0;min-width:0}

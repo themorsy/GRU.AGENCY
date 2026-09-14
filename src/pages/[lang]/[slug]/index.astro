@@ -7,8 +7,8 @@ export async function getStaticPaths(){
  const pages=await getCollection('pages');
  const slugs=pages.map(p=>p.data.slug);
  if(new Set(slugs).size!==slugs.length)throw new Error('Duplicate campaign URL');
- return pages.filter(p=>p.data.published&&p.data.slug!=='home').flatMap(p=>p.data.languages.map(lang=>({params:{lang,slug:p.data.slug},props:{c:p.data.content[lang],slug:p.data.slug,languages:p.data.languages}})));
+ return pages.filter(p=>p.data.published&&p.data.slug!=='home').flatMap(p=>p.data.languages.map(lang=>({params:{lang,slug:p.data.slug},props:{c:p.data.content[lang],slug:p.data.slug,languages:p.data.languages,gtmId:p.data.gtmId}})));
 }
-const {c,slug,languages}=Astro.props;
+const {c,slug,languages,gtmId}=Astro.props;
 ---
-<Base c={c} slug={slug} languages={languages}><PageSections c={c}/><Footer c={c} slot="footer"/></Base>
+<Base c={c} slug={slug} languages={languages} gtmId={gtmId}><PageSections c={c}/><Footer c={c} slot="footer"/></Base>

@@ -5,7 +5,10 @@ import postcss from 'postcss';
 import {openSync} from 'fontkit';
 
 // Independent contract: removing a whole CSS family/weight must not silently shrink the gate.
-export const expectedFonts={Mammoth:[400],Poppins:[300,400,500]};
+// Arabic Typesetting is supplied in one regular webfont file. Display headings use
+// browser-synthesized 700 because no licensed bold face exists; body/UI uses Sukar.
+export const expectedFonts={Mammoth:[400],Poppins:[300,400,500],Sukar:[400,700,900],'Arabic Typesetting':[400]};
+export const allowedSyntheticWeights={'Arabic Typesetting':[700]};
 export function inspectAssets(root='dist'){
  const base=path.resolve(root),files=[];const walk=dir=>{for(const d of fs.readdirSync(dir,{withFileTypes:true})){const f=path.join(dir,d.name);if(d.isDirectory())walk(f);else files.push(f);}};walk(base);
  let count=0;const missing=[],references=new Set(),faces=[],coverage=new Map(),fontCache=new Map();
@@ -29,7 +32,7 @@ export function inspectAssets(root='dist'){
  for(const [family,weights] of Object.entries(expectedFonts)){const actual=[...(coverage.get(family)||[])].sort((a,b)=>a-b);if(JSON.stringify(actual)!==JSON.stringify(weights))throw new Error(`Font coverage mismatch for ${family}: expected ${weights}, found ${actual}`);}
  for(const family of coverage.keys())if(!expectedFonts[family])throw new Error('Unexpected font family; update the approved contract: '+family);
  // Detect direct family/weight requests too. Inherited browser matching is additionally measured in Chrome.
- for(const css of files.filter(f=>f.endsWith('.css')))postcss.parse(fs.readFileSync(css,'utf8')).walkRules(rule=>{const d=Object.fromEntries(rule.nodes.filter(n=>n.type==='decl').map(n=>[n.prop,n.value]));if(!d['font-family']||!d['font-weight'])return;const family=d['font-family'].split(',')[0].replace(/['"]/g,'').trim(),weight=Number(d['font-weight']);if(expectedFonts[family]&&Number.isFinite(weight)&&!expectedFonts[family].includes(weight))throw new Error(`Unshipped requested weight: ${family} ${weight}`);});
+ for(const css of files.filter(f=>f.endsWith('.css')))postcss.parse(fs.readFileSync(css,'utf8')).walkRules(rule=>{const d=Object.fromEntries(rule.nodes.filter(n=>n.type==='decl').map(n=>[n.prop,n.value]));if(!d['font-family']||!d['font-weight'])return;const family=d['font-family'].split(',')[0].replace(/['"]/g,'').trim(),weight=Number(d['font-weight']);if(expectedFonts[family]&&Number.isFinite(weight)&&!expectedFonts[family].includes(weight)&&!allowedSyntheticWeights[family]?.includes(weight))throw new Error(`Unshipped requested weight: ${family} ${weight}`);});
  const orphanFonts=files.filter(f=>/\.(woff2?|otf|ttf)$/.test(f)&&!references.has(f));if(orphanFonts.length)throw new Error('Unreferenced emitted fonts: '+orphanFonts.join(', '));
  const markup=files.filter(f=>/\.(html|js|css)$/.test(f)).map(f=>fs.readFileSync(f,'utf8')).join('\n');
  const assets=files.filter(f=>/\.(woff2?|otf|ttf|png|jpe?g|svg|webp|mp4|ico)$/i.test(f));

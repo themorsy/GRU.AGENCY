@@ -22,7 +22,7 @@
     "@cloudflare/workers-types": "^5.20260911.1",
     "@types/node": "^24",
     "fontkit": "^2.0.4",
-    "linkedom": "^0.18.12",
+    "linkedom": "^0.18.13",
     "postcss": "^8.5.28",
     "typescript": "^5.9.2",
     "wrangler": "^4.131.1"

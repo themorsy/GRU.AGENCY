@@ -1,5 +1,9 @@
 /* Restored from GRU-SITE-CLAUDE. Vite hashes both sources; WOFF2 is preferred. */
 @font-face{font-family:Mammoth;src:url('../assets/fonts/Mammoth.woff2') format('woff2'),url('../assets/fonts/Mammoth.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:Sukar;src:url('../assets/fonts/sukar-arabic-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:Sukar;src:url('../assets/fonts/sukar-arabic-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:Sukar;src:url('../assets/fonts/sukar-arabic-900-normal.woff2') format('woff2');font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:'Arabic Typesetting';src:url('../assets/fonts/ArabicTypesetting.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-height) + 20px);background:var(--cream);color:var(--ink-soft);scrollbar-gutter:stable}
 body.modal-open{overflow:hidden}
@@ -536,3 +540,22 @@ html[dir=rtl] .field label{font-size:17px;font-weight:700}
 html[dir=rtl] .field :is(input,select,textarea){font-size:21px;font-weight:600}
 html[dir=rtl] .footer-column h2,html[dir=rtl] .footer-heading{font-size:18px;font-weight:700}
 html[dir=rtl] .footer-column a,html[dir=rtl] .footer-brand p{font-size:19px;font-weight:600;line-height:1.85}
+
+/* Final Arabic type system: Sukar is the readable UI face; display is headings only. */
+:root[lang=ar]{--font-primary:Sukar,sans-serif;--font-display:'Arabic Typesetting',Sukar,serif;--font-body:var(--font-primary);--size-h1:clamp(46px,6vw,80px);--size-h2:clamp(38px,4.2vw,54px);--size-stat:clamp(40px,3.1vw,44px);--lh-display:1.55;--lh-h2:1.55;--lh-h3:1.5;--lh-body:1.7}
+html[dir=rtl]{font-synthesis:weight}
+html[dir=rtl] body,html[dir=rtl] :is(button,input,select,textarea,.desktop-nav a,.mobile-menu nav a,.eyebrow,.section-label-number,.stat-label,.stat-value,.button,.method-number){font-family:var(--font-primary);letter-spacing:normal}
+html[dir=rtl] :is(h1,h2,.display),html[dir=rtl] .about-statement{font-family:var(--font-display);font-weight:700;letter-spacing:normal}
+html[dir=rtl] h3{font-family:var(--font-primary);font-size:21px;font-weight:600;line-height:1.5;letter-spacing:normal}
+html[dir=rtl] .hero{height:auto;min-height:min(78vh,660px)}
+html[dir=rtl] .hero h1{font-family:var(--font-display);font-size:var(--size-h1);font-weight:700;line-height:1.55;letter-spacing:normal}
+html[dir=rtl] .hero-content p{font-family:var(--font-primary);font-size:19px;font-weight:400;line-height:1.7}
+html[dir=rtl] .eyebrow,html[dir=rtl] .section-label-number{font-size:15px;font-weight:600;line-height:1.4}
+html[dir=rtl] .desktop-nav a{font-size:16px;font-weight:500;line-height:1.4}
+html[dir=rtl] .stat-value{font-family:var(--font-primary);font-size:var(--size-stat);font-weight:700;line-height:1.2}
+html[dir=rtl] .button{font-family:var(--font-primary);font-size:16px;font-weight:600;line-height:1}
+html[dir=rtl] .field :is(input,select,textarea){font-family:var(--font-primary);font-size:18px;font-weight:400;line-height:1.7}
+html[dir=rtl] .about-body,html[dir=rtl] .method-support,html[dir=rtl] .value-item p,html[dir=rtl] .method-card p,html[dir=rtl] .footer{font-family:var(--font-primary);font-size:19px;font-weight:400;line-height:1.7}
+html[dir=rtl] .about-statement{font-size:var(--size-h2);line-height:1.55}
+html[dir=rtl] main>.section :is(.section-heading>h2,.lead-intro .section-heading>h2){font-family:var(--font-display);font-size:var(--size-h2);line-height:1.55;font-weight:700;letter-spacing:normal}
+@media(max-width:767px){html[dir=rtl] .hero h1{font-size:clamp(44px,12vw,48px);line-height:1.55}html[dir=rtl] .hero-content p{font-size:18px}html[dir=rtl] .stat-value{font-size:40px}}
