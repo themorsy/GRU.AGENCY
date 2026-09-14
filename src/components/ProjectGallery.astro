@@ -1,0 +1,12 @@
+---
+import type {CollectionEntry} from 'astro:content';
+interface Props {project:CollectionEntry<'locales'>['data']['portfolio']['projects'][number];c:CollectionEntry<'locales'>['data']}
+const {project,c}=Astro.props;
+---
+  <div class="project-gallery" data-gallery aria-roledescription={c.ui.carousel} aria-label={project.name}>
+  <div class="lightbox-visual" data-slide-stage></div>
+  {project.gallery.map((media,index)=><template data-slide={index}>
+    {media.src ? media.type==='video'||media.src.includes('/video/upload/') ? <video controls playsinline preload="none" poster={media.poster} data-lazy-src={media.src} aria-label={media.alt||project.name}/> : media.type==='youtube' ? <button class="youtube-poster" data-youtube={media.src} aria-label={`${c.ui.play}: ${media.alt||project.name}`}>{media.poster&&<img src={media.poster} width="1200" height="900" alt=""/>}<span class="play-glyph" aria-hidden="true"></span></button> : <img src={media.src} alt={media.alt||project.name} width="1200" height="900" decoding="async"/> : <span>{c.portfolio.placeholder} {index+1}</span>}
+  </template>)}
+  <div class="gallery-controls"><button class="gallery-previous" type="button" data-gallery-step="-1" aria-label={c.ui.previous}></button><p data-gallery-status aria-live="polite" data-label={c.ui.slide}></p><button class="gallery-next" type="button" data-gallery-step="1" aria-label={c.ui.next}></button></div>
+</div>

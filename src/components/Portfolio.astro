@@ -1,0 +1,27 @@
+---
+import type {CollectionEntry} from 'astro:content';
+import SectionHeading from './SectionHeading.astro';
+import ProjectGallery from './ProjectGallery.astro';
+interface Props {c:CollectionEntry<'locales'>['data']}
+const {c}=Astro.props;
+const featuredProjects=c.portfolio.projects.filter(project=>project.image).slice(0,4);
+---
+<section id="work" class="section portfolio" aria-labelledby="work-heading">
+  <div class="portfolio-heading"><SectionHeading number={String(c.sectionOrder.filter(k=>!['hero','cta','proof'].includes(k)).indexOf('portfolio')+1).padStart(2,'0')} eyebrow={c.portfolio.eyebrow} title={c.portfolio.title} id="work-heading"/><div class="rail-controls"><button type="button" class="rail-arrow rail-previous" data-rail-previous aria-label={c.ui.previous}></button><button type="button" class="rail-arrow rail-next" data-rail-next aria-label={c.ui.next}></button></div></div>
+  <div class="project-grid" data-project-rail tabindex="0" role="region" aria-labelledby="work-heading">{featuredProjects.map((project,index)=><article class="project-card">
+    <a href={project.caseStudyUrl||`#${project.id}`} data-project-open={project.id} aria-haspopup="dialog" aria-controls="project-lightbox">
+      <div class="project-visual">{project.image?<img src={project.image} alt={project.imageAlt||project.name} width="800" height="1000" loading="lazy" decoding="async"/>:<span>{c.portfolio.placeholder}</span>}<div class="project-scrim" aria-hidden="true"></div><div class="project-overlay"><p class="project-featured"><bdi dir="ltr">Featured {String(index+1).padStart(2,'0')}</bdi></p><div><h3>{project.name}</h3><p class="project-category">{project.category}</p></div></div></div>
+    </a>
+    <template id={project.id}>
+      <ProjectGallery project={project} c={c}/>
+      <div class="lightbox-detail"><p class="eyebrow">{project.category}</p><h2 id="lightbox-title">{project.name}</h2><p>{project.body}</p>{project.caseStudyUrl&&<a class="case-study-link button-arrow" href={project.caseStudyUrl}>{c.portfolio.caseStudy}</a>}</div>
+    </template>
+    <noscript><details><summary>{project.name}</summary><p>{project.body}</p>{project.caseStudyUrl&&<a href={project.caseStudyUrl}>{c.portfolio.caseStudy}</a>}</details></noscript>
+  </article>)}</div>
+</section>
+<dialog id="project-lightbox" class="lightbox" aria-labelledby="lightbox-title">
+  <button class="dialog-close" data-lightbox-close aria-label={c.ui.close}></button>
+  <div class="lightbox-content"></div>
+</dialog>
+<script>import '../scripts/lightbox';</script>
+

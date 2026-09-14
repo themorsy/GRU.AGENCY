@@ -1,0 +1,23 @@
+---
+import type {CollectionEntry} from 'astro:content';
+import Hero from './Hero.astro';
+import Proof from './Proof.astro';
+import Services from './Services.astro';
+import Portfolio from './Portfolio.astro';
+import CtaBand from './CtaBand.astro';
+import ClientValue from './ClientValue.astro';
+import Method from './Method.astro';
+import About from './About.astro';
+import LeadForm from './LeadForm.astro';
+interface Props {c:CollectionEntry<'locales'>['data']}
+const {c}=Astro.props;
+const components={hero:Hero,proof:Proof,services:Services,portfolio:Portfolio,cta:CtaBand,value:ClientValue,method:Method,about:About,form:LeadForm};
+const ids={proof:'proof',services:'services',portfolio:'work',value:'value',method:'method',about:'about',form:'lead'};
+const numbered=c.sectionOrder.filter(key=>key in ids&&key!=='proof');
+// Client-approved progression follows visible section order; later sections retain all filled.
+const masks=[[1,0,0],[0,1,0],[0,0,1],[1,1,0],[1,1,1]];
+const archStyles=numbered.map((key,index)=>masks[Math.min(index,4)].map((filled,i)=>`#${ids[key as keyof typeof ids]} .arches i:nth-child(${i+1}){background:${filled?'currentColor':'transparent'};border:2px solid currentColor;border-bottom:0}`).join('')).join('');
+---
+<style is:global set:html={archStyles}/>
+<!-- CMS order is actual document order, not a visual CSS reorder. -->
+{c.sectionOrder.map(key=>{const Component=components[key];return <Component c={c}/>;})}

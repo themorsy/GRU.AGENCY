@@ -1,0 +1,8 @@
+---
+import type {CollectionEntry} from 'astro:content';
+import SectionHeading from './SectionHeading.astro';
+import Text from './Text.astro';
+interface Props {c:CollectionEntry<'locales'>['data']}
+const {c}=Astro.props;
+---
+<section id="about" class="section about" aria-labelledby="about-heading"><div class="about-grid"><div class="about-content"><SectionHeading eyebrow={c.about.eyebrow} number={String(c.sectionOrder.filter(key=>!['hero','cta','proof'].includes(key)).indexOf('about')+1).padStart(2,'0')}/><h2 id="about-heading" class="about-statement"><Text value={c.about.statement}/></h2><p class="about-body"><Text value={c.about.body}/></p></div><div class="about-visual" aria-hidden="true"></div></div></section>

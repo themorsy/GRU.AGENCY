@@ -1,0 +1,10 @@
+---
+import {getCollection} from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageSections from '../../components/PageSections.astro';
+import Footer from '../../components/Footer.astro';
+export async function getStaticPaths(){return Object.values((await getCollection('pages')).find(p=>p.data.slug==='home')!.data.content).map(c=>({params:{lang:c.lang},props:{c}}));}
+const {c}=Astro.props;
+---
+<Base c={c}><PageSections c={c}/><Footer c={c} slot="footer"/></Base>
+

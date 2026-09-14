@@ -1,0 +1,19 @@
+---
+import {getCollection} from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Arches from '../../../components/Arches.astro';
+import Text from '../../../components/Text.astro';
+export async function getStaticPaths(){return Object.values((await getCollection('pages')).find(p=>p.data.slug==='home')!.data.content).map(c=>({params:{lang:c.lang},props:{c}}));}
+const {c}=Astro.props;
+---
+<Base c={c} thanks><section class="thank-you"><div class="thank-you-content"><Arches thanks/><h1><Text value={c.thanks.title}/></h1><p><Text value={c.thanks.body}/></p><a class="button" href={`/${c.lang}/`}><Text value={c.thanks.back}/></a></div></section></Base>
+<script>
+  import {consumeReceipt} from '../../../scripts/form-logic';
+  // Count an accepted submission once; refreshes and direct visits are not new leads.
+  try{
+    const lang=document.documentElement.lang;
+    const receipt=consumeReceipt(sessionStorage,lang);
+    if(receipt){window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'lead_confirmed',lead_id:receipt.id,page_language:lang,page_path:location.pathname,page_type:'thank_you',form_name:`gru-lead-${lang}`});}
+  }catch{}
+</script>
+

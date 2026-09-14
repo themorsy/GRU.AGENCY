@@ -1,0 +1,1278 @@
+{
+  "title": "Homepage",
+  "slug": "home",
+  "published": true,
+  "languages": [
+    "en",
+    "ar"
+  ],
+  "content": {
+    "en": {
+      "id": "en",
+      "lang": "en",
+      "dir": "ltr",
+      "copyStatus": "approved",
+      "seo": {
+        "title": "GRU | Digital Marketing Agency in Egypt, GCC & Europe",
+        "description": "GRU is a data-driven digital marketing agency in Egypt helping businesses across Egypt and the GCC grow through strategy, content, performance marketing, branding, e-commerce and production."
+      },
+      "logoAlt": "GRU — Growth Marketing Agency",
+      "nav": [
+        {
+          "label": "Method",
+          "href": "#method"
+        },
+        {
+          "label": "Services",
+          "href": "#services"
+        },
+        {
+          "label": "Solutions",
+          "href": "#value"
+        },
+        {
+          "label": "Proof",
+          "href": "#proof"
+        },
+        {
+          "label": "About",
+          "href": "#about"
+        }
+      ],
+      "ui": {
+        "book": "Book a Call",
+        "work": "View Our Work",
+        "skip": "Skip to content",
+        "menu": "Menu",
+        "close": "Close",
+        "language": "العربية",
+        "navigation": "Main navigation",
+        "whatsapp": "WhatsApp",
+        "pause": "Pause motion",
+        "play": "Play motion",
+        "previous": "Previous",
+        "next": "Next",
+        "slide": "Slide",
+        "carousel": "Project gallery",
+        "languagePair": "EN / AR"
+      },
+      "hero": {
+        "headline": "We Don't Sell Tactics, We Sell Strategies to Grow",
+        "body": "We combines strategy, creative, performance and production to help businesses make better marketing decisions, reduce wasted effort and turn marketing into measurable growth.",
+        "video": "/assets/hero/hero-desktop-1152x576.mp4",
+        "poster": "/assets/hero/hero-poster-1440x720.jpg",
+        "videoWebm": "/assets/hero/hero-desktop-1152x576.webm",
+        "videoMobile": "/assets/hero/hero-mobile-576x1024.mp4"
+      },
+      "proof": {
+        "eyebrow": "Proof",
+        "logosLabel": "Our clients",
+        "stats": [
+          {
+            "value": "400+",
+            "label": "Happy Clients",
+            "dir": "ltr",
+            "countTo": 400
+          },
+          {
+            "value": "+40,000,000\nEGP",
+            "label": "Tracked Sales",
+            "dir": "ltr",
+            "countTo": 40000000
+          },
+          {
+            "value": "2021",
+            "label": "Operating Since",
+            "dir": "ltr",
+            "countTo": 2021
+          }
+        ],
+        "logos": [
+          {
+            "src": "",
+            "alt": "Client logo"
+          },
+          {
+            "src": "",
+            "alt": "Client logo"
+          },
+          {
+            "src": "",
+            "alt": "Client logo"
+          },
+          {
+            "src": "",
+            "alt": "Client logo"
+          }
+        ]
+      },
+      "services": {
+        "eyebrow": "Services",
+        "title": "What We Do",
+        "items": [
+          {
+            "id": "strategy-growth",
+            "num": "01",
+            "label": "Strategy & Growth",
+            "items": [
+              {
+                "id": "digital-marketing-strategies",
+                "label": "Digital Marketing Strategies",
+                "href": "#lead"
+              },
+              {
+                "id": "industry-based-strategies",
+                "label": "Industry-Based Strategies",
+                "href": "#lead"
+              },
+              {
+                "id": "sales-strategies",
+                "label": "Sales Strategies",
+                "href": "#lead"
+              }
+            ]
+          },
+          {
+            "id": "content-creative",
+            "num": "02",
+            "label": "Content & Creative",
+            "items": [
+              {
+                "id": "social-content",
+                "label": "Social Content",
+                "href": "#lead"
+              },
+              {
+                "id": "video-reels",
+                "label": "Video / Reels",
+                "href": "#lead"
+              },
+              {
+                "id": "photography",
+                "label": "Photography",
+                "href": "#lead"
+              },
+              {
+                "id": "ugc",
+                "label": "UGC",
+                "href": "#lead"
+              },
+              {
+                "id": "creative-campaigns",
+                "label": "Creative Campaigns",
+                "href": "#lead"
+              }
+            ]
+          },
+          {
+            "id": "digital-performance",
+            "num": "03",
+            "label": "Digital & Performance",
+            "items": [
+              {
+                "id": "media-buying",
+                "label": "Media Buying",
+                "href": "#lead"
+              },
+              {
+                "id": "e-commerce-growth",
+                "label": "E-commerce Growth",
+                "href": "#lead"
+              },
+              {
+                "id": "e-mail-lead-generation",
+                "label": "E-mail & Lead Generation",
+                "href": "#lead"
+              },
+              {
+                "id": "seo",
+                "label": "SEO",
+                "href": "#lead"
+              },
+              {
+                "id": "influencer-marketing",
+                "label": "Influencer Marketing",
+                "href": "#lead"
+              }
+            ]
+          },
+          {
+            "id": "brand-experience",
+            "num": "04",
+            "label": "Brand & Experience",
+            "items": [
+              {
+                "id": "brand-strategy",
+                "label": "Brand Strategy",
+                "href": "#lead"
+              },
+              {
+                "id": "visual-identity",
+                "label": "Visual Identity",
+                "href": "#lead"
+              },
+              {
+                "id": "web-app-development",
+                "label": "Web & App Development",
+                "href": "#lead"
+              },
+              {
+                "id": "activations",
+                "label": "Activations",
+                "href": "#lead"
+              },
+              {
+                "id": "production",
+                "label": "Production",
+                "href": "#lead"
+              }
+            ]
+          }
+        ]
+      },
+      "portfolio": {
+        "eyebrow": "Portfolio",
+        "title": "Selected Work",
+        "note": "Click a project to expand",
+        "placeholder": "Project visual",
+        "caseStudy": "View case study",
+        "projects": [
+          {
+            "id": "project-1",
+            "name": "Make It",
+            "category": "Media Buying",
+            "image": "/assets/projects/project-1-3.webp",
+            "imageAlt": "Make It",
+            "fullImage": "/assets/projects/project-1-3.webp",
+            "caseStudyUrl": "",
+            "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
+            "gallery": [
+              {
+                "src": "/assets/projects/project-1-1.webp",
+                "alt": "Make It",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-1-2.webp",
+                "alt": "Make It",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-1-3.webp",
+                "alt": "Make It",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-1-4.webp",
+                "alt": "Make It",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          },
+          {
+            "id": "project-2",
+            "name": "Make It Products",
+            "category": "Brand Strategy",
+            "image": "/assets/projects/project-2-1.webp",
+            "imageAlt": "Make It Products",
+            "fullImage": "/assets/projects/project-2-1.webp",
+            "caseStudyUrl": "",
+            "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
+            "gallery": [
+              {
+                "src": "/assets/projects/project-2-1.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-2-2.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-2-3.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-2-4.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          },
+          {
+            "id": "project-3",
+            "name": "Natural Land",
+            "category": "Social Content",
+            "image": "/assets/projects/project-3-2.webp",
+            "imageAlt": "Natural Land",
+            "fullImage": "/assets/projects/project-3-2.webp",
+            "caseStudyUrl": "",
+            "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
+            "gallery": [
+              {
+                "src": "/assets/projects/project-3-1.webp",
+                "alt": "Natural Land",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-3-2.webp",
+                "alt": "Natural Land",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-3-3.webp",
+                "alt": "Natural Land",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-3-4.webp",
+                "alt": "Natural Land",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          },
+          {
+            "id": "project-4",
+            "name": "Yuse",
+            "category": "E-commerce Growth",
+            "image": "",
+            "imageAlt": "Yuse",
+            "fullImage": "",
+            "caseStudyUrl": "",
+            "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
+            "gallery": [
+              {
+                "src": "",
+                "alt": "Demonstration portfolio image",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "Demonstration portfolio image",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "Demonstration portfolio image",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "Demonstration portfolio image",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          },
+          {
+            "id": "project-5",
+            "name": "Vine",
+            "category": "Production",
+            "image": "/assets/projects/project-5-3.webp",
+            "imageAlt": "Vine",
+            "fullImage": "/assets/projects/project-5-3.webp",
+            "caseStudyUrl": "",
+            "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
+            "gallery": [
+              {
+                "src": "/assets/projects/project-5-1.webp",
+                "alt": "Vine",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-5-2.webp",
+                "alt": "Vine",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-5-3.webp",
+                "alt": "Vine",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-5-4.webp",
+                "alt": "Vine",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          },
+          {
+            "id": "project-6",
+            "name": "Project Six",
+            "category": "Visual Identity",
+            "image": "",
+            "imageAlt": "Demonstration portfolio image",
+            "fullImage": "",
+            "caseStudyUrl": "",
+            "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
+            "gallery": [
+              {
+                "src": "",
+                "alt": "Demonstration portfolio image",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "Demonstration portfolio image",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "Demonstration portfolio image",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "Demonstration portfolio image",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          }
+        ]
+      },
+      "cta": {
+        "statement": "Ready to turn marketing into measurable growth?"
+      },
+      "value": {
+        "eyebrow": "GRU Client Value",
+        "title": "What You Get As a GRU Client",
+        "items": [
+          {
+            "title": "Strategic Guidance",
+            "body": "Clear marketing direction based on your business goals, market context and available data.",
+            "icon": "care"
+          },
+          {
+            "title": "Smarter Risk Management",
+            "body": "We use research, planning and performance data to reduce avoidable waste and make marketing decisions with greater confidence.",
+            "icon": "pattern"
+          },
+          {
+            "title": "Integrated Execution",
+            "body": "Strategy, creative, media and production are coordinated through one accountable partner, reducing operational friction for the client.",
+            "icon": "partnership"
+          },
+          {
+            "title": "Cost & Resource Efficiency",
+            "body": "We focus budget, tools and resources where they can create the greatest value and reduce unnecessary spending.",
+            "icon": "care"
+          }
+        ]
+      },
+      "method": {
+        "eyebrow": "GRU Method",
+        "title": "How We Work",
+        "support": "Less assumption. Less wasted effort. Better-informed growth.",
+        "items": [
+          {
+            "num": "01",
+            "title": "Understand",
+            "titleBreakAfter": 5,
+            "body": "Business, audience, market and objectives.",
+            "icon": "care"
+          },
+          {
+            "num": "02",
+            "title": "Plan",
+            "body": "Strategy, channels, budget and KPIs.",
+            "icon": "pattern"
+          },
+          {
+            "num": "03",
+            "title": "Create & Launch",
+            "body": "Content, campaigns, production and activation.",
+            "icon": "partnership"
+          },
+          {
+            "num": "04",
+            "title": "Measure",
+            "body": "Track performance and business response.",
+            "icon": "pattern"
+          },
+          {
+            "num": "05",
+            "title": "Optimize & Scale",
+            "body": "Improve what works and redirect resources where they create more value.",
+            "icon": "care"
+          }
+        ]
+      },
+      "about": {
+        "eyebrow": "Who We Are",
+        "statement": "Execution without direction creates output. Strategy turns that output into business value.",
+        "body": "GRU helps businesses define the value they offer, communicate it effectively and turn it into measurable market growth."
+      },
+      "form": {
+        "eyebrow": "Contact",
+        "title": "Book a Call",
+        "intro": "Tell us what you need help with. A member of the GRU team will get in touch shortly.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Name",
+            "placeholder": "Full name",
+            "span": 1,
+            "required": true,
+            "type": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email",
+            "placeholder": "name@company.com",
+            "span": 1,
+            "required": true,
+            "type": "email"
+          },
+          {
+            "id": "mobile",
+            "label": "Mobile",
+            "placeholder": "+20",
+            "span": 1,
+            "required": true,
+            "type": "tel"
+          },
+          {
+            "id": "service",
+            "label": "Service Interested In",
+            "placeholder": "Select a service",
+            "span": 1,
+            "required": true,
+            "type": "select"
+          },
+          {
+            "id": "company",
+            "label": "Company",
+            "placeholder": "Optional",
+            "span": 2,
+            "required": false,
+            "type": "text"
+          },
+          {
+            "id": "brief",
+            "label": "Short Brief / What do you need help with?",
+            "placeholder": "Optional",
+            "span": 2,
+            "required": false,
+            "type": "textarea"
+          }
+        ],
+        "errors": {
+          "required": "Please complete this field.",
+          "email": "Please enter a valid email address.",
+          "mobile": "Please enter a valid phone number.",
+          "service": "Please select a service from the list.",
+          "length": "Please shorten this text."
+        },
+        "sending": "Sending…",
+        "submitError": "We couldn’t send your request. Please try again or contact us on WhatsApp.",
+        "noscript": "Please enable JavaScript to send the form, or contact us on WhatsApp."
+      },
+      "footer": {
+        "body": "Strategy, creative, performance and production built around measurable business growth.",
+        "sitemap": "Sitemap",
+        "contact": "Contact",
+        "follow": "Follow",
+        "whatsapp": "WhatsApp us",
+        "copyright": "© 2026 GRU. All rights reserved.",
+        "socials": [
+          {
+            "label": "LinkedIn",
+            "href": "https://eg.linkedin.com/company/grueg"
+          },
+          {
+            "label": "Instagram",
+            "href": "https://www.instagram.com/gru.agency.eg"
+          },
+          {
+            "label": "Facebook",
+            "href": "https://www.facebook.com/Gru.growth"
+          },
+          {
+            "label": "TikTok",
+            "href": "https://www.tiktok.com/@gru_agency"
+          }
+        ]
+      },
+      "thanks": {
+        "title": "Thank you.",
+        "body": "We’ve received your request. A member of the GRU team will get in touch with you shortly.",
+        "back": "Back to GRU"
+      },
+      "contact": {
+        "email": "hello@gru.agency",
+        "phone": "+20 111 111 3442",
+        "phoneHref": "tel:+201111113442",
+        "whatsapp": "https://wa.me/201111113442"
+      },
+      "sectionOrder": [
+        "hero",
+        "proof",
+        "services",
+        "portfolio",
+        "cta",
+        "value",
+        "method",
+        "about",
+        "form"
+      ]
+    },
+    "ar": {
+      "id": "ar",
+      "lang": "ar",
+      "dir": "rtl",
+      "copyStatus": "draft-except-seo-title-and-h1",
+      "seo": {
+        "title": "GRU | وكالة تسويق رقمي في مصر ودول الخليج",
+        "description": "GRU وكالة تسويق رقمي متكاملة في مصر، تساعد الشركات في مصر ودول الخليج على النمو من خلال الاستراتيجية، المحتوى، الإعلانات، العلامات التجارية، التجارة الإلكترونية والإنتاج."
+      },
+      "logoAlt": "GRU — Growth Marketing Agency",
+      "nav": [
+        {
+          "label": "المنهجية",
+          "href": "#method"
+        },
+        {
+          "label": "الخدمات",
+          "href": "#services"
+        },
+        {
+          "label": "الحلول",
+          "href": "#value"
+        },
+        {
+          "label": "أعمالنا",
+          "href": "#proof"
+        },
+        {
+          "label": "من نحن",
+          "href": "#about"
+        }
+      ],
+      "ui": {
+        "book": "احجز مكالمة",
+        "work": "شاهد أعمالنا",
+        "skip": "انتقل إلى المحتوى",
+        "menu": "القائمة",
+        "close": "إغلاق",
+        "language": "English",
+        "navigation": "التنقل الرئيسي",
+        "whatsapp": "واتساب",
+        "pause": "إيقاف الحركة",
+        "play": "تشغيل الحركة",
+        "previous": "السابق",
+        "next": "التالي",
+        "slide": "شريحة",
+        "carousel": "معرض المشروع",
+        "languagePair": "EN / AR"
+      },
+      "hero": {
+        "headline": "تسويق مبني على النمو، لا على التخمين.",
+        "body": "GRU وكالة تسويق رقمي متكاملة في مصر، تساعد الشركات في مصر ودول الخليج على النمو من خلال الاستراتيجية، المحتوى، الإعلانات، العلامات التجارية، التجارة الإلكترونية والإنتاج.",
+        "video": "/assets/hero/hero-desktop-1152x576.mp4",
+        "poster": "/assets/hero/hero-poster-1440x720.jpg",
+        "videoWebm": "/assets/hero/hero-desktop-1152x576.webm",
+        "videoMobile": "/assets/hero/hero-mobile-576x1024.mp4"
+      },
+      "proof": {
+        "eyebrow": "أرقامنا",
+        "logosLabel": "عملاؤنا",
+        "stats": [
+          {
+            "value": "400+",
+            "label": "عميل سعيد",
+            "dir": "ltr",
+            "countTo": 400
+          },
+          {
+            "value": "+40,000,000\nجنيه مصري",
+            "label": "مبيعات متتبعة",
+            "dir": "rtl",
+            "countTo": 40000000
+          },
+          {
+            "value": "2021",
+            "label": "نعمل منذ",
+            "dir": "ltr",
+            "countTo": 2021
+          }
+        ],
+        "logos": [
+          {
+            "src": "",
+            "alt": "شعار عميل"
+          },
+          {
+            "src": "",
+            "alt": "شعار عميل"
+          },
+          {
+            "src": "",
+            "alt": "شعار عميل"
+          },
+          {
+            "src": "",
+            "alt": "شعار عميل"
+          }
+        ]
+      },
+      "services": {
+        "eyebrow": "الخدمات",
+        "title": "ماذا نفعل",
+        "items": [
+          {
+            "id": "strategy-growth",
+            "num": "01",
+            "label": "الاستراتيجية والنمو",
+            "items": [
+              {
+                "id": "digital-marketing-strategies",
+                "label": "استراتيجيات التسويق الرقمي",
+                "href": "#lead"
+              },
+              {
+                "id": "industry-based-strategies",
+                "label": "استراتيجيات حسب القطاع",
+                "href": "#lead"
+              },
+              {
+                "id": "sales-strategies",
+                "label": "استراتيجيات البيع",
+                "href": "#lead"
+              }
+            ]
+          },
+          {
+            "id": "content-creative",
+            "num": "02",
+            "label": "المحتوى والإبداع",
+            "items": [
+              {
+                "id": "social-content",
+                "label": "محتوى السوشيال ميديا",
+                "href": "#lead"
+              },
+              {
+                "id": "video-reels",
+                "label": "الفيديو والريلز",
+                "href": "#lead"
+              },
+              {
+                "id": "photography",
+                "label": "التصوير",
+                "href": "#lead"
+              },
+              {
+                "id": "ugc",
+                "label": "محتوى المستخدمين",
+                "href": "#lead"
+              },
+              {
+                "id": "creative-campaigns",
+                "label": "الحملات الإبداعية",
+                "href": "#lead"
+              }
+            ]
+          },
+          {
+            "id": "digital-performance",
+            "num": "03",
+            "label": "الديجيتال والأداء",
+            "items": [
+              {
+                "id": "media-buying",
+                "label": "شراء الوسائط",
+                "href": "#lead"
+              },
+              {
+                "id": "e-commerce-growth",
+                "label": "نمو التجارة الإلكترونية",
+                "href": "#lead"
+              },
+              {
+                "id": "e-mail-lead-generation",
+                "label": "البريد الإلكتروني وجذب العملاء",
+                "href": "#lead"
+              },
+              {
+                "id": "seo",
+                "label": "تحسين محركات البحث",
+                "href": "#lead"
+              },
+              {
+                "id": "influencer-marketing",
+                "label": "التسويق عبر المؤثرين",
+                "href": "#lead"
+              }
+            ]
+          },
+          {
+            "id": "brand-experience",
+            "num": "04",
+            "label": "العلامة والتجربة",
+            "items": [
+              {
+                "id": "brand-strategy",
+                "label": "استراتيجية العلامة",
+                "href": "#lead"
+              },
+              {
+                "id": "visual-identity",
+                "label": "الهوية البصرية",
+                "href": "#lead"
+              },
+              {
+                "id": "web-app-development",
+                "label": "تطوير المواقع والتطبيقات",
+                "href": "#lead"
+              },
+              {
+                "id": "activations",
+                "label": "التنشيط",
+                "href": "#lead"
+              },
+              {
+                "id": "production",
+                "label": "الإنتاج",
+                "href": "#lead"
+              }
+            ]
+          }
+        ]
+      },
+      "portfolio": {
+        "eyebrow": "أعمالنا",
+        "title": "أعمال مختارة",
+        "note": "اضغط على أي مشروع لعرض التفاصيل",
+        "placeholder": "صورة المشروع",
+        "caseStudy": "عرض دراسة الحالة",
+        "projects": [
+          {
+            "id": "project-1",
+            "name": "Make It",
+            "category": "شراء الوسائط",
+            "image": "/assets/projects/project-1-3.webp",
+            "imageAlt": "Make It",
+            "fullImage": "/assets/projects/project-1-3.webp",
+            "caseStudyUrl": "",
+            "body": "ملخص دراسة حالة مؤقت. تدعم كل بطاقة اسم المشروع أو العميل وصورة وفئة الخدمة ورابطًا لصفحة دراسة حالة مستقبلية.",
+            "gallery": [
+              {
+                "src": "/assets/projects/project-1-1.webp",
+                "alt": "Make It",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-1-2.webp",
+                "alt": "Make It",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-1-3.webp",
+                "alt": "Make It",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-1-4.webp",
+                "alt": "Make It",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          },
+          {
+            "id": "project-2",
+            "name": "Make It Products",
+            "category": "استراتيجية العلامة",
+            "image": "/assets/projects/project-2-1.webp",
+            "imageAlt": "Make It Products",
+            "fullImage": "/assets/projects/project-2-1.webp",
+            "caseStudyUrl": "",
+            "body": "ملخص دراسة حالة مؤقت. تدعم كل بطاقة اسم المشروع أو العميل وصورة وفئة الخدمة ورابطًا لصفحة دراسة حالة مستقبلية.",
+            "gallery": [
+              {
+                "src": "/assets/projects/project-2-1.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-2-2.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-2-3.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-2-4.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          },
+          {
+            "id": "project-3",
+            "name": "Natural Land",
+            "category": "محتوى السوشيال ميديا",
+            "image": "/assets/projects/project-3-2.webp",
+            "imageAlt": "Natural Land",
+            "fullImage": "/assets/projects/project-3-2.webp",
+            "caseStudyUrl": "",
+            "body": "ملخص دراسة حالة مؤقت. تدعم كل بطاقة اسم المشروع أو العميل وصورة وفئة الخدمة ورابطًا لصفحة دراسة حالة مستقبلية.",
+            "gallery": [
+              {
+                "src": "/assets/projects/project-3-1.webp",
+                "alt": "Natural Land",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-3-2.webp",
+                "alt": "Natural Land",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-3-3.webp",
+                "alt": "Natural Land",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-3-4.webp",
+                "alt": "Natural Land",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          },
+          {
+            "id": "project-4",
+            "name": "Yuse",
+            "category": "نمو التجارة الإلكترونية",
+            "image": "",
+            "imageAlt": "Yuse",
+            "fullImage": "",
+            "caseStudyUrl": "",
+            "body": "ملخص دراسة حالة مؤقت. تدعم كل بطاقة اسم المشروع أو العميل وصورة وفئة الخدمة ورابطًا لصفحة دراسة حالة مستقبلية.",
+            "gallery": [
+              {
+                "src": "",
+                "alt": "صورة توضيحية مؤقتة للأعمال",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "صورة توضيحية مؤقتة للأعمال",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "صورة توضيحية مؤقتة للأعمال",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "صورة توضيحية مؤقتة للأعمال",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          },
+          {
+            "id": "project-5",
+            "name": "Vine",
+            "category": "الإنتاج",
+            "image": "/assets/projects/project-5-3.webp",
+            "imageAlt": "Vine",
+            "fullImage": "/assets/projects/project-5-3.webp",
+            "caseStudyUrl": "",
+            "body": "ملخص دراسة حالة مؤقت. تدعم كل بطاقة اسم المشروع أو العميل وصورة وفئة الخدمة ورابطًا لصفحة دراسة حالة مستقبلية.",
+            "gallery": [
+              {
+                "src": "/assets/projects/project-5-1.webp",
+                "alt": "Vine",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-5-2.webp",
+                "alt": "Vine",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-5-3.webp",
+                "alt": "Vine",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-5-4.webp",
+                "alt": "Vine",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          },
+          {
+            "id": "project-6",
+            "name": "المشروع السادس",
+            "category": "الهوية البصرية",
+            "image": "",
+            "imageAlt": "صورة توضيحية مؤقتة للأعمال",
+            "fullImage": "",
+            "caseStudyUrl": "",
+            "body": "ملخص دراسة حالة مؤقت. تدعم كل بطاقة اسم المشروع أو العميل وصورة وفئة الخدمة ورابطًا لصفحة دراسة حالة مستقبلية.",
+            "gallery": [
+              {
+                "src": "",
+                "alt": "صورة توضيحية مؤقتة للأعمال",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "صورة توضيحية مؤقتة للأعمال",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "صورة توضيحية مؤقتة للأعمال",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "",
+                "alt": "صورة توضيحية مؤقتة للأعمال",
+                "type": "image",
+                "poster": ""
+              }
+            ]
+          }
+        ]
+      },
+      "cta": {
+        "statement": "هل أنت مستعد لتحويل التسويق إلى نمو قابل للقياس؟"
+      },
+      "value": {
+        "eyebrow": "قيمة العميل",
+        "title": "ماذا تحصل عليه كعميل لـ GRU",
+        "items": [
+          {
+            "title": "توجيه استراتيجي",
+            "body": "اتجاه تسويقي واضح مبني على أهداف عملك وسياق السوق والبيانات المتاحة.",
+            "icon": "care"
+          },
+          {
+            "title": "إدارة أذكى للمخاطر",
+            "body": "نستخدم البحث والتخطيط وبيانات الأداء لتقليل الهدر ولاتخاذ قرارات تسويقية بثقة أكبر.",
+            "icon": "pattern"
+          },
+          {
+            "title": "تنفيذ متكامل",
+            "body": "الاستراتيجية والإبداع والوسائط والإنتاج تُدار من خلال شريك واحد مسؤول، مما يقلل التعقيد التشغيلي على العميل.",
+            "icon": "partnership"
+          },
+          {
+            "title": "كفاءة التكلفة والموارد",
+            "body": "نوجّه الميزانية والأدوات والموارد إلى حيث تحقق أكبر قيمة، ونقلل الإنفاق غير الضروري.",
+            "icon": "care"
+          }
+        ]
+      },
+      "method": {
+        "eyebrow": "منهجية GRU",
+        "title": "كيف نعمل",
+        "support": "افتراضات أقل. جهد أقل مهدر. نمو مبني على معلومات أفضل.",
+        "items": [
+          {
+            "num": "01",
+            "title": "نفهم",
+            "body": "العمل، الجمهور، السوق والأهداف.",
+            "icon": "care"
+          },
+          {
+            "num": "02",
+            "title": "نخطط",
+            "body": "الاستراتيجية، القنوات، الميزانية والمؤشرات.",
+            "icon": "pattern"
+          },
+          {
+            "num": "03",
+            "title": "ننفذ ونطلق",
+            "body": "المحتوى، الحملات، الإنتاج والتنشيط.",
+            "icon": "partnership"
+          },
+          {
+            "num": "04",
+            "title": "نقيس",
+            "body": "نتابع الأداء واستجابة العمل.",
+            "icon": "pattern"
+          },
+          {
+            "num": "05",
+            "title": "نطوّر ونوسّع",
+            "body": "نحسّن ما ينجح ونعيد توجيه الموارد لما يحقق قيمة أكبر.",
+            "icon": "care"
+          }
+        ]
+      },
+      "about": {
+        "eyebrow": "من نحن",
+        "statement": "التنفيذ بدون توجيه ينتج مخرجات. الاستراتيجية تحوّل هذه المخرجات إلى قيمة للأعمال.",
+        "body": "تساعد GRU الشركات على تحديد القيمة التي تقدمها، وتوصيلها بفعالية، وتحويلها إلى نمو قابل للقياس في السوق."
+      },
+      "form": {
+        "eyebrow": "تواصل معنا",
+        "title": "احجز مكالمة",
+        "intro": "أخبرنا بما تحتاج المساعدة فيه، وسيتواصل معك أحد أعضاء فريق GRU قريبًا.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "الاسم",
+            "placeholder": "الاسم بالكامل",
+            "span": 1,
+            "required": true,
+            "type": "text"
+          },
+          {
+            "id": "email",
+            "label": "البريد الإلكتروني",
+            "placeholder": "name@company.com",
+            "span": 1,
+            "required": true,
+            "type": "email"
+          },
+          {
+            "id": "mobile",
+            "label": "رقم الموبايل",
+            "placeholder": "‎+20",
+            "span": 1,
+            "required": true,
+            "type": "tel"
+          },
+          {
+            "id": "service",
+            "label": "الخدمة المطلوبة",
+            "placeholder": "اختر الخدمة",
+            "span": 1,
+            "required": true,
+            "type": "select"
+          },
+          {
+            "id": "company",
+            "label": "الشركة",
+            "placeholder": "اختياري",
+            "span": 2,
+            "required": false,
+            "type": "text"
+          },
+          {
+            "id": "brief",
+            "label": "نبذة مختصرة — بماذا نساعدك؟",
+            "placeholder": "اختياري",
+            "span": 2,
+            "required": false,
+            "type": "textarea"
+          }
+        ],
+        "errors": {
+          "required": "يرجى إكمال هذا الحقل.",
+          "email": "يرجى إدخال بريد إلكتروني صحيح.",
+          "mobile": "يرجى إدخال رقم هاتف صحيح.",
+          "service": "يرجى اختيار خدمة من القائمة.",
+          "length": "يرجى تقصير هذا النص."
+        },
+        "sending": "جارٍ الإرسال…",
+        "submitError": "تعذر إرسال طلبك. يرجى المحاولة مرة أخرى أو التواصل معنا عبر واتساب.",
+        "noscript": "يرجى تفعيل JavaScript لإرسال النموذج، أو التواصل معنا عبر واتساب."
+      },
+      "footer": {
+        "body": "استراتيجية، إبداع، أداء وإنتاج مبني على نمو قابل للقياس.",
+        "sitemap": "خريطة الموقع",
+        "contact": "للتواصل",
+        "follow": "تابعنا",
+        "whatsapp": "تواصل على واتساب",
+        "copyright": "© 2026 GRU. جميع الحقوق محفوظة.",
+        "socials": [
+          {
+            "label": "LinkedIn",
+            "href": "https://eg.linkedin.com/company/grueg"
+          },
+          {
+            "label": "Instagram",
+            "href": "https://www.instagram.com/gru.agency.eg"
+          },
+          {
+            "label": "Facebook",
+            "href": "https://www.facebook.com/Gru.growth"
+          },
+          {
+            "label": "TikTok",
+            "href": "https://www.tiktok.com/@gru_agency"
+          }
+        ]
+      },
+      "thanks": {
+        "title": "شكرًا لك.",
+        "body": "لقد استلمنا طلبك. سيتواصل معك أحد أعضاء فريق GRU قريبًا.",
+        "back": "العودة إلى GRU"
+      },
+      "contact": {
+        "email": "hello@gru.agency",
+        "phone": "+20 111 111 3442",
+        "phoneHref": "tel:+201111113442",
+        "whatsapp": "https://wa.me/201111113442"
+      },
+      "sectionOrder": [
+        "hero",
+        "proof",
+        "services",
+        "portfolio",
+        "cta",
+        "value",
+        "method",
+        "about",
+        "form"
+      ]
+    }
+  }
+}

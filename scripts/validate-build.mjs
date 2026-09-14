@@ -2,6 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import {parseHTML} from 'linkedom';
+import {siteOrigin as origin} from '../site.config.mjs';
+const features=JSON.parse(fs.readFileSync('src/content/features.json','utf8'));
+assert.ok(!fs.existsSync('dist/index.html'),'Root belongs to the Worker, not a meta refresh');
 const routes=['en/','ar/','en/thank-you/','ar/thank-you/'];
 const read=p=>fs.readFileSync(p,'utf8');
 const documents=new Map(routes.map(route=>[route,parseHTML(read(`dist/${route}index.html`)).document]));
@@ -9,12 +12,13 @@ let checks=0;
 const ok=(condition,message)=>{assert.ok(condition,message);checks++;};
 for(const [route,doc] of documents){
   const lang=route.split('/')[0],thanks=route.includes('thank-you');
-  const c=JSON.parse(read(`src/content/${lang}.json`));
+  const c=JSON.parse(read('src/content/pages/home.json')).content[lang];
   ok(doc.documentElement.lang===lang,`${route}: lang`);
   ok(doc.documentElement.dir===(lang==='ar'?'rtl':'ltr'),`${route}: direction`);
+  if(thanks)ok(doc.querySelector('meta[name=robots]')?.content==='noindex, follow',`${route}: noindex confirmation`);
   ok(doc.querySelectorAll('h1').length===1,`${route}: exactly one H1`);
   ok(doc.querySelector('h1').textContent.trim()===(thanks?c.thanks.title:c.hero.headline),`${route}: exact H1`);
-  ok(doc.querySelector('link[rel=canonical]').href===`https://gru.agency/${route}`,`${route}: canonical`);
+  ok(doc.querySelector('link[rel=canonical]').href===`${origin}/${route}`,`${route}: canonical`);
   ok(doc.querySelectorAll('link[hreflang]').length===3,`${route}: alternate languages`);
   ok(doc.querySelector('.floating-whatsapp')?.href===c.contact.whatsapp,`${route}: WhatsApp`);
   ok(doc.querySelector('.floating-whatsapp')?.getAttribute('aria-label'),`${route}: WhatsApp accessible name`);
@@ -28,37 +32,39 @@ for(const [route,doc] of documents){
   for(const node of doc.querySelectorAll('[src],link[href],a[href]')){
     const attr=node.getAttribute('src')||node.getAttribute('href');
     if(!attr||/^(https?:|mailto:|tel:|data:)/.test(attr))continue;
-    const url=new URL(attr,`https://gru.agency/${route}`);
+    const url=new URL(attr,`${origin}/${route}`);
     if(url.hash){const targetRoute=url.pathname.replace(/^\//,'');const target=documents.get(targetRoute);if(target)ok(!!target.getElementById(url.hash.slice(1)),`${route}: anchor ${attr}`);}
     if(!url.pathname.endsWith('/'))ok(fs.existsSync(path.join('dist',decodeURIComponent(url.pathname))),`${route}: asset ${attr}`);
     else if(!url.hash)ok(fs.existsSync(path.join('dist',url.pathname,'index.html')),`${route}: route ${attr}`);
   }
   if(!thanks){
     ok(!doc.querySelector('[data-marquee-toggle]'),`${route}: no visible pause control`);
-    if(!c.hero.video)ok(doc.querySelector('.hero-video-slot'),`${route}: visible showreel slot`);
+    ok(!doc.querySelector('.hero-video-slot'),`${route}: review-only video annotation removed`);
     const order=Array.from(doc.querySelectorAll('main>section')).map(s=>s.id||s.className);
-    ok(order.join('|')==='hero|proof|services|work|cta-band|value|method|about|lead',`${route}: section order`);
+    const sectionIds={hero:'hero',proof:'proof',services:'services',portfolio:'work',cta:'cta-band',value:'value',method:'method',about:'about',form:'lead'};
+    ok(order.join('|')===c.sectionOrder.map(s=>sectionIds[s]).join('|'),`${route}: CMS section order`);
     ok(doc.querySelectorAll('.service-row').length===4,`${route}: categories`);
     ok(doc.querySelectorAll('.service-pill').length===18,`${route}: service count`);
-    ok(doc.querySelectorAll('.project-card').length===6,`${route}: project count`);
+    ok(doc.querySelectorAll('.project-card').length===c.portfolio.projects.filter(project=>project.image).slice(0,4).length,`${route}: populated project count`);
     ok(doc.querySelectorAll('.method-card').length===5,`${route}: method steps`);
     ok(doc.querySelector('.hero-content p').textContent===c.hero.body,`${route}: verbatim hero paragraph`);
     ok(doc.querySelector('.logo-group[aria-hidden=true]'),`${route}: silent duplicate logos`);
     ok(doc.querySelector('dialog#project-lightbox[aria-labelledby]'),`${route}: native lightbox`);
-    ok(doc.querySelectorAll('form [required]').length===4,`${route}: required fields`);
-    ok(doc.querySelector('form').getAttribute('action')===`/${lang}/thank-you/`,`${route}: form redirect`);
-    ok(doc.querySelector('form').getAttribute('data-netlify')==='true',`${route}: Netlify detection`);
-    ok(doc.querySelector('input[name=form-name]').value===`gru-lead-${lang}`,`${route}: form name`);
-    ok(doc.querySelector('select').querySelectorAll('option').length===19,`${route}: service options`);
-    ok(!doc.querySelector('button[type=submit]').disabled,`${route}: initially enabled`);
-    for(const field of doc.querySelectorAll('.field input,.field select,.field textarea')){
-      ok(doc.querySelector(`label[for="${field.id}"]`),`${route}: field label`);
-      ok(doc.getElementById(field.getAttribute('aria-describedby')),`${route}: error description`);
+    ok(!doc.querySelector('[data-netlify],input[name=form-name]'),`${route}: no Netlify form directives`);
+    {
+      ok(doc.querySelector('form').getAttribute('action')==='/api/lead',`${route}: Worker endpoint`);
+      ok(doc.querySelectorAll('form [required]').length===4,`${route}: required fields`);
+      for(const field of doc.querySelectorAll('.field input,.field select,.field textarea')){
+        ok(field.hasAttribute('name'),`${route}: field name`);
+        ok(doc.querySelector(`label[for="${field.id}"]`),`${route}: field label`);
+      }
     }
+    ok(doc.querySelector('[data-lead-form]').getAttribute('data-live')===String(features.leadFormLive),`${route}: form sending matches feature flag`);
+    ok(doc.querySelector('.form-submit').hasAttribute('disabled')===!features.leadFormLive,`${route}: preview submit disabled until sending enabled`);
     for(const item of [...c.value.items,...c.method.items])ok(doc.body.textContent.includes(item.body),`${route}: complete copy ${item.title}`);
   }
 }
-const xml=read('dist/sitemap.xml');for(const route of routes)ok(xml.includes(`<loc>https://gru.agency/${route}</loc>`),`sitemap: ${route}`);
+const xml=read('dist/sitemap.xml');for(const route of routes)ok(xml.includes(`<loc>${origin}/${route}</loc>`)===!route.includes('thank-you'),`sitemap inclusion: ${route}`);
 const css=fs.readdirSync('dist/_astro').filter(f=>f.endsWith('.css')).map(f=>read('dist/_astro/'+f)).join('');
 ok(!/(?:#fff(?:fff)?\b|:\s*white\s*[;}])/i.test(css),'no pure white in CSS');
 ok(css.includes('prefers-reduced-motion'),'reduced motion CSS');

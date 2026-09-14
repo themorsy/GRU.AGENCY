@@ -1,0 +1,11 @@
+---
+interface Props {step:string}
+const {step}=Astro.props;
+---
+<svg class="method-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {step==='01'&&<><circle cx="21" cy="21" r="10"/><path d="m29 29 8 8M17 21h8M21 17v8"/></>}
+  {step==='02'&&<><rect x="11" y="8" width="26" height="32" rx="2"/><path d="m17 17 2.5 2.5 4-5M26 18h6M17 26l2.5 2.5 4-5M26 27h6M17 35l2.5 2.5 4-5M26 36h6"/></>}
+  {step==='03'&&<><path d="M12 36 36 12M22 12h14v14M18 30 12 36"/><path d="M12 24v12h12"/></>}
+  {step==='04'&&<><path d="M11 37h27M14 33V23h6v10M22 33V16h6v17M30 33V10h6v23"/></>}
+  {step==='05'&&<><path d="M11 34c6-1 8-14 14-12 4 1 5 8 12-8M33 14h4v4"/><circle cx="11" cy="34" r="2"/><circle cx="37" cy="14" r="2"/></>}
+</svg>

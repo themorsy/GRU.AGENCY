@@ -1,192 +1,25 @@
 ---
-/**
- * Base document. Owns <html lang/dir>, head, SEO, hreflang, GTM and the
- * global stylesheets. Every page renders through this so the language
- * attributes and tracking can never drift between routes.
- */
-import '../styles/tokens.css';
-import '../styles/fonts.css';
+import type {CollectionEntry} from 'astro:content';
+import Header from '../components/Header.astro';
+import mammothUrl from '../assets/fonts/Mammoth.woff2?url';
+import {buildVersion} from '../../site.config.mjs';
+import WhatsApp from '../components/WhatsApp.astro';
 import '../styles/global.css';
-import { getContent, otherLocale, site, type Locale } from '../content';
 
-export type PageKey = 'home' | 'thank-you';
-
-interface Props {
-  locale: Locale;
-  pageKey: PageKey;
-  title?: string;
-  description?: string;
-  /** Thank-you pages are intentionally kept out of the index. */
-  noindex?: boolean;
-  /** Homepages carry Organization + LocalBusiness structured data. */
-  structuredData?: boolean;
-}
-
-const {
-  locale,
-  pageKey,
-  title,
-  description,
-  noindex = false,
-  structuredData = false,
-} = Astro.props;
-
-const c = getContent(locale);
-const other = otherLocale(locale);
-
-const pathFor = (l: Locale) => (pageKey === 'home' ? `/${l}/` : `/${l}/thank-you/`);
-const origin = (Astro.site?.origin ?? site.origin).replace(/\/$/, '');
-const abs = (p: string) => `${origin}${p}`;
-
-const pageTitle = title ?? c.seo.title;
-const pageDescription = description ?? c.seo.description;
-const canonical = abs(pathFor(locale));
-
-const gtmEnabled = Boolean(site.gtmId) && !site.gtmId.includes('XXXX');
-
-const org = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Organization',
-      '@id': `${origin}/#organization`,
-      name: site.brand,
-      url: origin,
-      logo: abs(site.logoGreen),
-      email: site.email,
-      telephone: site.phoneDisplay,
-      foundingDate: site.structuredData.founded,
-      description: c.seo.description,
-      sameAs: site.socials.map((s) => s.href).filter(Boolean),
-      areaServed: site.structuredData.areaServed.map((code) => ({
-        '@type': 'Country',
-        identifier: code,
-      })),
-    },
-    {
-      '@type': 'LocalBusiness',
-      '@id': `${origin}/#localbusiness`,
-      name: site.brand,
-      url: canonical,
-      image: abs(site.logoGreen),
-      email: site.email,
-      telephone: site.phoneDisplay,
-      priceRange: '$$',
-      parentOrganization: { '@id': `${origin}/#organization` },
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: site.structuredData.addressLocality,
-        addressCountry: site.structuredData.addressCountry,
-      },
-    },
-    {
-      '@type': 'WebSite',
-      '@id': `${origin}/#website`,
-      url: origin,
-      name: site.brand,
-      inLanguage: locale,
-      publisher: { '@id': `${origin}/#organization` },
-    },
-  ],
-};
+interface Props{c:CollectionEntry<'locales'>['data'];thanks?:boolean;slug?:string;languages?:('en'|'ar')[]}
+const {c,thanks=false,slug='',languages=['en','ar']}=Astro.props;
+const origin=Astro.site!.origin;
+const path=`/${c.lang}/${thanks?'thank-you/':slug?slug+'/':''}`;
+const title=thanks?`${c.thanks.title} | GRU`:c.seo.title;
+const description=thanks?c.thanks.body:c.seo.description;
+const gtm=import.meta.env.PUBLIC_GTM_ID||'GTM-54CQR8HS';
+const gtmEnabled=import.meta.env.PUBLIC_GTM_ENABLED==='true';
+const verification=import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const schema={'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':origin+'/#organization',name:'GRU',url:origin,logo:origin+'/assets/logo-green.png',email:c.contact.email,telephone:c.contact.phone,sameAs:c.footer.socials.map(s=>s.href)},{'@type':'LocalBusiness','@id':origin+'/#business',name:'GRU',url:origin,telephone:c.contact.phone,email:c.contact.email,parentOrganization:{'@id':origin+'/#organization'},image:origin+'/assets/logo-green.png',areaServed:['Egypt','GCC','Europe']}]};
 ---
+<!doctype html><Fragment set:html={`<!-- BUILD: ${buildVersion} -->`}/><html lang={c.lang} dir={c.dir}><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><!-- Thank-you is a confirmation route, not a search landing page. -->
+{thanks&&<meta name="robots" content="noindex, follow"/>}<meta property="og:locale" content={c.lang==='ar'?'ar_AR':'en_US'}/><meta name="description" content={description}/><meta name="theme-color" content="#1F5B33"/><link rel="canonical" href={origin+path}/>{languages.map(lang=><link rel="alternate" hreflang={lang} href={`${origin}/${lang}/${thanks?'thank-you/':slug?slug+'/':''}`}/>)}<link rel="alternate" hreflang="x-default" href={`${origin}/${languages.includes('en')?'en':languages[0]}/${thanks?'thank-you/':slug?slug+'/':''}`}/><meta property="og:type" content="website"/><meta property="og:site_name" content="GRU"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={origin+path}/><meta name="twitter:card" content="summary"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/><link rel="icon" type="image/png" href="/assets/logo-green.png"/>{c.lang==='en'&&<link rel="preload" href={mammothUrl} as="font" type="font/woff2" crossorigin/>}{verification&&<meta name="google-site-verification" content={verification}/>}
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g,'\\u003c')}/>
+<script is:inline define:vars={{gtm,gtmEnabled,pageLanguage:c.lang,pagePath:path,pageType:thanks?'thank_you':slug?'campaign':'homepage'}}>window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_language:pageLanguage,page_path:pagePath,page_type:pageType});if(gtmEnabled&&!['localhost','127.0.0.1'].includes(location.hostname)&&!location.hostname.endsWith('.workers.dev')){window.dataLayer.push({'gtm.start':Date.now(),event:'gtm.js'});const tag=document.createElement('script');tag.async=true;tag.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(gtm);document.head.appendChild(tag);}</script>
+</head><body data-page-type={thanks?'thank_you':slug?'campaign':'homepage'} data-lang={c.lang} data-thanks={thanks?'true':undefined}>{gtmEnabled&&<noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${gtm}`} height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>}<a class="skip-link" href="#main">{c.ui.skip}</a><Header c={c} minimal={thanks} slug={slug} languages={languages}/><main id="main" tabindex="-1"><slot/></main><slot name="footer"/><WhatsApp c={c}/><script>import '../scripts/site';</script></body></html>
 
-<!doctype html>
-<html lang={locale} dir={c.dir}>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>{pageTitle}</title>
-    <meta name="description" content={pageDescription} />
-    <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
-
-    <!-- Separate crawlable /en/ and /ar/ URLs, paired both ways plus x-default -->
-    <link rel="alternate" hreflang="en" href={abs(pathFor('en'))} />
-    <link rel="alternate" hreflang="ar" href={abs(pathFor('ar'))} />
-    <link rel="alternate" hreflang="x-default" href={abs(pathFor('en'))} />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={site.brand} />
-    <meta property="og:locale" content={locale === 'ar' ? 'ar_EG' : 'en_US'} />
-    <meta property="og:locale:alternate" content={other === 'ar' ? 'ar_EG' : 'en_US'} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={pageDescription} />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={abs(site.logoGreen)} />
-    <meta name="twitter:card" content="summary_large_image" />
-
-    <meta name="theme-color" content="#1F5B33" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-
-    {
-      site.searchConsoleToken && (
-        <meta name="google-site-verification" content={site.searchConsoleToken} />
-      )
-    }
-
-    <!-- Preload only the faces this locale renders above the fold -->
-    {
-      locale === 'en' ? (
-        <>
-          <link rel="preload" href="/fonts/Mammoth.woff2" as="font" type="font/woff2" crossorigin />
-          <link
-            rel="preload"
-            href="/fonts/poppins-latin-300-normal.woff2"
-            as="font"
-            type="font/woff2"
-            crossorigin
-          />
-        </>
-      ) : (
-        <>
-          <link
-            rel="preload"
-            href="/fonts/cairo-arabic-900-normal.woff2"
-            as="font"
-            type="font/woff2"
-            crossorigin
-          />
-          <link
-            rel="preload"
-            href="/fonts/cairo-arabic-300-normal.woff2"
-            as="font"
-            type="font/woff2"
-            crossorigin
-          />
-        </>
-      )
-    }
-
-    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(org)} />}
-
-    {
-      gtmEnabled && (
-        <script
-          is:inline
-          define:vars={{ gtmId: site.gtmId }}
-          set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',gtmId);`}
-        />
-      )
-    }
-    <script is:inline>window.dataLayer = window.dataLayer || [];</script>
-  </head>
-
-  <body>
-    {
-      gtmEnabled && (
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${site.gtmId}`}
-            height="0"
-            width="0"
-            style="display:none;visibility:hidden"
-            title="Google Tag Manager"
-          />
-        </noscript>
-      )
-    }
-    <slot />
-  </body>
-</html>

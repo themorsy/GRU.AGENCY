@@ -1,161 +1,43 @@
-/**
- * Book a Call — client-side validation and submission.
- *
- * Behaviour per the handoff:
- *   • validate inline on blur, one message per field
- *   • the submit button is disabled only while sending, never before first
- *     interaction
- *   • on success, redirect to the language-matched thank-you page and push the
- *     dataLayer event
- *   • on failure, surface a single form-level error and leave the values intact
- *
- * The markup is a real Netlify form with a real `action`, so with JavaScript
- * off the browser posts it and Netlify redirects to the same thank-you URL.
- * Everything here is enhancement on top of that.
- */
-
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-/* Digits, spaces and the usual separators; at least 7 digits present. */
-const PHONE_ALLOWED = /^[+()\-\s.\d]+$/;
-
-type Control = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-
-function errorFor(control: Control): string | null {
-  const value = control.value.trim();
-  const required = control.hasAttribute('required');
-
-  if (!value) return required ? control.dataset.errorRequired || 'Required' : null;
-
-  if (control instanceof HTMLInputElement) {
-    if (control.type === 'email' && !EMAIL.test(value)) {
-      return control.dataset.errorFormat ?? null;
-    }
-    if (control.type === 'tel') {
-      const digits = value.replace(/\D/g, '');
-      if (!PHONE_ALLOWED.test(value) || digits.length < 7) {
-        return control.dataset.errorFormat ?? null;
-      }
-    }
-  }
-  return null;
+import {validateField,receiptKey,postLead} from './form-logic';
+import type {ErrorKey} from './form-logic';
+const form=document.querySelector<HTMLFormElement>('[data-lead-form]');
+if(form){
+ form.noValidate=true;
+ const pageUrl=form.elements.namedItem('page_url') as HTMLInputElement;pageUrl.value=location.origin+location.pathname;
+ const fields=Array.from(form.querySelectorAll<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>('.field input,.field select,.field textarea'));
+ const service=form.querySelector<HTMLSelectElement>('#service')!;
+ const serviceIds=Array.from(service.options).map(o=>o.value).filter(Boolean);
+ const errors=JSON.parse(form.dataset.errors||'{}') as Record<ErrorKey,string>;
+ const touched=new Set<string>();
+ const validate=(field:typeof fields[number])=>{const error=validateField(field.name,field.value,serviceIds);const target=document.getElementById(`${field.id}-error`);if(target)target.textContent=error?errors[error]:'';field.setAttribute('aria-invalid',String(!!error));return !error;};
+ fields.forEach(field=>{field.addEventListener('blur',()=>{touched.add(field.id);validate(field);});for(const name of ['input','change'])field.addEventListener(name,()=>{if(touched.has(field.id))validate(field);});});
+ document.querySelectorAll<HTMLAnchorElement>('[data-service]').forEach(link=>link.addEventListener('click',()=>{if(link.getAttribute('href')!=='#lead')return;service.value=link.dataset.service||'';if(touched.has('service'))validate(service);}));
+ let submitting=false,submissionId=crypto.randomUUID();
+ form.addEventListener('submit',async event=>{
+  event.preventDefault();if(submitting || form.dataset.live!=='true')return;
+  let firstInvalid:typeof fields[number]|undefined;
+  fields.forEach(field=>{touched.add(field.id);if(!validate(field)&&!firstInvalid)firstInvalid=field;});
+  if(firstInvalid){firstInvalid.focus();return;}
+  // Requested event: a valid attempt, not proof of delivery. No personal field values.
+  window.dataLayer=window.dataLayer||[];
+  window.dataLayer.push({event:'generate_lead',lead_id:submissionId,page_language:document.documentElement.lang,page_path:location.pathname,page_type:document.body.dataset.pageType||'homepage',form_name:form.name});
+  const submit=form.querySelector<HTMLButtonElement>('[type=submit]')!,errorMessage=form.querySelector<HTMLElement>('[data-submit-error-message]')!;
+  const originalLabel=submit.textContent;
+  submitting=true;submit.disabled=true;submit.textContent=form.dataset.sending||'';form.setAttribute('aria-busy','true');errorMessage.hidden=true;
+  try{
+   (form.elements.namedItem('submission-id') as HTMLInputElement).value=submissionId;
+   (form.elements.namedItem('service-label') as HTMLInputElement).value=service.selectedOptions[0]?.textContent||'';
+   const payload=new URLSearchParams();new FormData(form).forEach((value,key)=>payload.append(key,String(value)));
+   await postLead(form.action,payload.toString(),form.dataset.live==='true');
+   const receipt={id:submissionId,lang:document.documentElement.lang,at:Date.now()};
+   try{sessionStorage.setItem(receiptKey,JSON.stringify(receipt));}catch{}
+   // Storage-blocked visits cannot prove a confirmation on the next page; do not invent one.
+   // The server still captures the lead. Confirmation analytics is pending in that case.
+   window.location.assign(`/${document.documentElement.lang}/thank-you/`);
+  }catch{errorMessage.textContent=form.dataset.submitError||'';errorMessage.hidden=false;}
+  finally{submitting=false;submit.disabled=false;submit.textContent=originalLabel;form.removeAttribute('aria-busy');}
+ });
+ window.addEventListener('pageshow',event=>{if(event.persisted){submissionId=crypto.randomUUID();form.reset();touched.clear();fields.forEach(f=>{f.removeAttribute('aria-invalid');const e=document.getElementById(`${f.id}-error`);if(e)e.textContent='';});}});
 }
 
-function boot() {
-  const form = document.querySelector<HTMLFormElement>('[data-gru-form]');
-  if (!form) return;
 
-  const submit = form.querySelector<HTMLButtonElement>('[data-gru-form-submit]');
-  const formError = form.querySelector<HTMLElement>('[data-form-error]');
-  const controls = Array.from(form.querySelectorAll<Control>('.field__control'));
-
-  const thankYou = form.dataset.thankYou || '/en/thank-you/';
-  const submittingLabel = form.dataset.submittingLabel || 'Sending…';
-  const submitLabel = form.dataset.submitLabel || 'Book a Call';
-
-  const setError = (control: Control, message: string | null) => {
-    const field = control.closest('.field');
-    const box = field?.querySelector<HTMLElement>('[data-error]');
-    if (!box) return;
-    if (message) {
-      box.textContent = message;
-      box.hidden = false;
-      control.setAttribute('aria-invalid', 'true');
-    } else {
-      box.textContent = '';
-      box.hidden = true;
-      control.removeAttribute('aria-invalid');
-    }
-  };
-
-  for (const control of controls) {
-    control.addEventListener('blur', () => setError(control, errorFor(control)));
-    /* Clear a standing message as soon as the field is being corrected —
-       leaving it up while the user types reads as the fix not working. */
-    control.addEventListener('input', () => {
-      if (control.getAttribute('aria-invalid') === 'true') setError(control, errorFor(control));
-    });
-    control.addEventListener('change', () => {
-      if (control instanceof HTMLSelectElement) setError(control, errorFor(control));
-    });
-  }
-
-  const validateAll = () => {
-    let firstInvalid: Control | null = null;
-    for (const control of controls) {
-      const message = errorFor(control);
-      setError(control, message);
-      if (message && !firstInvalid) firstInvalid = control;
-    }
-    return firstInvalid;
-  };
-
-  let sending = false;
-
-  form.addEventListener('submit', async (event) => {
-    if (sending) {
-      event.preventDefault();
-      return;
-    }
-
-    const firstInvalid = validateAll();
-    if (firstInvalid) {
-      event.preventDefault();
-      firstInvalid.focus();
-      firstInvalid.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      return;
-    }
-
-    /* Valid: take over the POST so the dataLayer push happens before we leave
-       the page, and so a network failure can be reported in place. */
-    event.preventDefault();
-    sending = true;
-    if (formError) formError.hidden = true;
-    if (submit) {
-      submit.disabled = true;
-      submit.textContent = submittingLabel;
-    }
-
-    const body = new URLSearchParams();
-    for (const [key, value] of new FormData(form).entries()) {
-      body.append(key, String(value));
-    }
-
-    try {
-      const response = await fetch(form.getAttribute('action') || window.location.pathname, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
-      });
-      /* Netlify answers the AJAX post with a 2xx, or a 3xx it has already
-         followed to the action URL. Either counts as accepted. */
-      if (!response.ok && response.type !== 'opaqueredirect') {
-        throw new Error(`Form POST failed: ${response.status}`);
-      }
-
-      const dataLayer = ((window as unknown as { dataLayer?: unknown[] }).dataLayer ??= []);
-      dataLayer.push({
-        event: form.dataset.submitEvent || 'lead_form_submit',
-        form_name: form.getAttribute('name'),
-        locale: (form.querySelector<HTMLInputElement>('input[name="locale"]')?.value ?? '').trim(),
-        service: (form.querySelector<HTMLSelectElement>('select[name="service"]')?.value ?? '').trim(),
-      });
-
-      window.location.assign(thankYou);
-    } catch {
-      sending = false;
-      if (submit) {
-        submit.disabled = false;
-        submit.textContent = submitLabel;
-      }
-      if (formError) {
-        formError.hidden = false;
-        formError.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      }
-    }
-  });
-}
-
-boot();
-
-/* Marks this file as a module so its top-level names stay local to it. */
-export {};

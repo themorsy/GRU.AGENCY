@@ -1,0 +1,17 @@
+import {chromium} from 'file:///C:/Users/hp/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs';
+import fs from 'node:fs';import assert from 'node:assert/strict';import {execFileSync,spawn} from 'node:child_process';import {parseHTML} from 'linkedom';import {assertAssets} from './assert-assets.mjs';
+const featuresPath='src/content/features.json',original=fs.readFileSync(featuresPath,'utf8');const evidence={};let server;const browser=await chromium.launch({channel:"chrome",headless:true});
+const build=()=>execFileSync(process.execPath,['node_modules/astro/bin/astro.mjs','build'],{env:{...process.env,ASTRO_TELEMETRY_DISABLED:'1'},stdio:'pipe'});
+try{
+ const f=JSON.parse(original);f.leadFormLive=true;fs.writeFileSync(featuresPath,JSON.stringify(f));build();
+ server=spawn(process.execPath,['node_modules/wrangler/bin/wrangler.js','dev','--local','--port','4340'],{env:{...process.env,WRANGLER_SEND_METRICS:'false',XDG_CONFIG_HOME:'D:/GRU/GRU Project AI/gru-review-evidence/worker-local-config',WRANGLER_LOG_PATH:'D:/GRU/GRU Project AI/gru-review-evidence/worker-retention.log'},stdio:'ignore'});
+ let ready=false;for(let i=0;i<60;i++){try{const r=await fetch('http://127.0.0.1:4340/en/');if((await r.text()).includes('data-lead-form')){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,500));}assert.ok(ready,'Fresh Worker must serve the enabled local form fixture');
+ for(const lang of ['en','ar']){
+  const data={language:lang,name:'Preserve local test',email:'invalid',mobile:'+201111111111',service:'strategy-growth',company:'Keep company',brief:'Keep <this> & all input','submission-id':'retention-'+lang,page_url:'http://127.0.0.1:4340/'+lang+'/','service-label':'Strategy & Growth'};
+  const response=await fetch('http://127.0.0.1:4340/api/lead',{method:'POST',body:new URLSearchParams(data),headers:{'CF-Connecting-IP':lang==='en'?'192.0.2.81':'192.0.2.82'},redirect:'manual'});
+  const html=await response.text();const {document}=parseHTML(html);const page=await browser.newPage();await page.route('**/*',r=>r.abort());await page.setContent(html);assert.equal(response.status,422);for(const name of ['name','email','mobile','company'])assert.equal(document.querySelector(`[name="${name}"]`).getAttribute('value'),data[name]);assert.equal(await page.locator('textarea').inputValue(),data.brief);await page.close();assert.ok(document.querySelector('option[value="strategy-growth"]').hasAttribute('selected'));assert.ok(!document.querySelector('[data-submit-error-message]').hasAttribute('hidden'));evidence[lang]={status:response.status,allEnteredValuesPreserved:true,errorVisible:true};
+ }
+}finally{await browser.close();server?.kill();fs.writeFileSync(featuresPath,original);build();}
+const font=fs.readdirSync('dist/_astro').find(n=>n.startsWith('poppins-latin-300-normal.')&&n.endsWith('.woff2'));const path='dist/_astro/'+font,temp=path+'.qa-missing';assert.ok(!fs.existsSync(temp));
+try{fs.renameSync(path,temp);assert.throws(()=>assertAssets(),/Missing CSS assets/);evidence.missingFontRejected=true;}finally{if(fs.existsSync(temp))fs.renameSync(temp,path);}
+evidence.finalAssetReferences=assertAssets();evidence.leadFormLive=JSON.parse(fs.readFileSync(featuresPath,'utf8')).leadFormLive;fs.writeFileSync('../gru-review-evidence/cloudflare-v2/retention-asset-tests.json',JSON.stringify(evidence,null,2));console.log(evidence);

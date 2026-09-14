@@ -1,0 +1,9 @@
+---
+import pattern from '../assets/icons/pattern.svg?raw';
+import care from '../assets/icons/care.svg?raw';
+import partnership from '../assets/icons/partnership.svg?raw';
+interface Props {name:'pattern'|'care'|'partnership'}
+const icons={pattern,care,partnership};
+// Original vectors extracted from supplied BI PDF, physical page37; no tracing.
+---
+<span class="brand-line-icon" aria-hidden="true" set:html={icons[Astro.props.name]}/>
