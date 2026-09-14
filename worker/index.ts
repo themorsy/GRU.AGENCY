@@ -21,15 +21,24 @@ function popupMessage(url:URL,type:'success'|'error',value:unknown){
  const message=`authorization:github:${type}:${JSON.stringify(value)}`.replace(/</g,'\\u003c');
  return cmsResponse(`<!doctype html><meta name="robots" content="noindex, nofollow"><title>GRU CMS</title><script>window.opener&&window.opener.postMessage(${JSON.stringify(message)},${JSON.stringify(url.origin)});window.close();</script><p>You can close this window.</p>`);
 }
+function oauthHandshake(url:URL){
+ const origin=JSON.stringify(url.origin);const provider=JSON.stringify('github');
+ return cmsResponse(`<!doctype html><meta name="robots" content="noindex, nofollow"><title>Connecting to GitHub…</title><script>(function(){const origin=${origin},provider=${provider},message='authorizing:'+provider;function continueLogin(event){if(event.origin!==origin||event.data!==message)return;window.removeEventListener('message',continueLogin);location.replace('/api/cms/authorize');}window.addEventListener('message',continueLogin);if(window.opener)window.opener.postMessage(message,origin);})();</script><p>Connecting to GitHub…</p>`);
+}
 export async function handleCms(request:Request,env:Env,send:typeof fetch=fetch):Promise<Response>{
  const url=new URL(request.url);
  if(url.pathname==='/api/cms/config')return cmsJson({cloudinary:{cloudName:'r8i4m3mq',apiKey:env.CLOUDINARY_API_KEY||null}});
  if(url.pathname==='/api/cms/auth'){
   if(request.method!=='GET')return new Response(null,{status:405,headers:{Allow:'GET','Cache-Control':'no-store'}});
   if(!env.CMS_GITHUB_OAUTH_CLIENT_ID||!env.CMS_GITHUB_OAUTH_CLIENT_SECRET)return cmsResponse('<!doctype html><meta name="robots" content="noindex, nofollow"><title>CMS setup required</title><p>GitHub OAuth is not configured for this CMS yet.</p>',503);
-  const state=crypto.randomUUID();const callback=new URL('/api/cms/callback',url.origin).toString();const authorize=new URL('https://github.com/login/oauth/authorize');
+  const state=crypto.randomUUID();const response=oauthHandshake(url);response.headers.set('Set-Cookie',`gru_cms_oauth_state=${state}; Path=/api/cms; HttpOnly; Secure; SameSite=Lax; Max-Age=600`);return response;
+ }
+ if(url.pathname==='/api/cms/authorize'){
+  const state=cookie(request,'gru_cms_oauth_state');if(!state)return popupMessage(url,'error',{error:'Invalid or expired CMS login state.'});
+  if(!env.CMS_GITHUB_OAUTH_CLIENT_ID||!env.CMS_GITHUB_OAUTH_CLIENT_SECRET)return popupMessage(url,'error',{error:'GitHub OAuth is not configured.'});
+  const callback=new URL('/api/cms/callback',url.origin).toString();const authorize=new URL('https://github.com/login/oauth/authorize');
   authorize.searchParams.set('client_id',env.CMS_GITHUB_OAUTH_CLIENT_ID);authorize.searchParams.set('redirect_uri',callback);authorize.searchParams.set('scope','repo');authorize.searchParams.set('state',state);
-  return new Response(null,{status:302,headers:{Location:authorize.toString(),'Cache-Control':'no-store','Set-Cookie':`gru_cms_oauth_state=${state}; Path=/api/cms; HttpOnly; Secure; SameSite=Lax; Max-Age=600`}});
+  return new Response(null,{status:302,headers:{Location:authorize.toString(),'Cache-Control':'no-store'}});
  }
  if(url.pathname==='/api/cms/callback'){
   const state=url.searchParams.get('state')||'';const failure=url.searchParams.get('error');
