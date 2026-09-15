@@ -808,19 +808,23 @@
         ],
         "logos": [
           {
-            "src": "",
+            "src": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1789510543/BEURRE_LUNE.png",
             "alt": "شعار عميل"
           },
           {
-            "src": "",
+            "src": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1789510544/mokhito.png",
             "alt": "شعار عميل"
           },
           {
-            "src": "",
+            "src": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1789507199/55.png",
             "alt": "شعار عميل"
           },
           {
-            "src": "",
+            "src": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1789508184/ChatGPT_Image_Sep_6_2026_01_20_05_PM.png",
+            "alt": "شعار عميل"
+          },
+          {
+            "src": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1789507204/Healthy_Sleep.png",
             "alt": "شعار عميل"
           }
         ]
