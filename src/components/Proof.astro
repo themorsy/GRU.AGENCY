@@ -4,6 +4,6 @@ interface Props {c:CollectionEntry<'locales'>['data']}
 const {c}=Astro.props;
 ---
 <section id="proof" class="section proof" aria-label={c.proof.eyebrow}>
-  <div class="stats">{c.proof.stats.map(s=><div class="stat"><p class="stat-label">{s.label}</p><p class="stat-value display" data-count-to={s.countTo ?? undefined}><bdi dir={s.dir}>{s.value}</bdi></p></div>)}</div>
+  <div class="stats">{c.proof.stats.map((s,index)=><div class="stat" data-motion-reveal="stat" style={`--motion-delay:${index * 80}ms`}><p class="stat-label">{s.label}</p><p class="stat-value display" data-count-to={s.countTo ?? undefined}><bdi dir={s.dir}>{s.value}</bdi></p></div>)}</div>
   <div class="marquee" role="region" aria-label={c.proof.logosLabel} style={`--logo-count:${c.proof.logos.length}`}><div class="marquee-track">{[false,true].map(duplicate=><div class="logo-group" aria-hidden={duplicate?'true':undefined}>{c.proof.logos.map(l=><div class="logo-slot">{l.src?<img src={l.src} alt={duplicate?'':l.alt} width="220" height="66" loading="lazy" decoding="async"/>:<span>{l.alt}</span>}</div>)}</div>)}</div></div>
 </section>

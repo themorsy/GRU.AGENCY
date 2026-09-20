@@ -9,6 +9,6 @@ const {c}=Astro.props;
   {/* Client correction: video placement annotations are review-only, not website copy. */}
   {c.hero.video&&<video class="hero-video" data-video data-desktop={c.hero.video} data-webm={c.hero.videoWebm} data-mobile={c.hero.videoMobile} poster={c.hero.poster} preload="none" muted loop playsinline aria-hidden="true" tabindex="-1"><source data-hero-webm type="video/webm"/><source data-hero-mp4 type="video/mp4"/></video>}
   <div class="hero-overlay" aria-hidden="true"></div>
-  <div class="hero-content"><h1 id="hero-heading"><Text value={c.hero.headline}/></h1><p><Text value={c.hero.body}/></p><div class="hero-actions"><a class="button" href={c.sectionOrder.includes('form')?'#lead':`/${c.lang}/#lead`}>{c.ui.book}</a><a class="button button-outline" href={c.sectionOrder.includes('portfolio')?'#work':`/${c.lang}/#work`}>{c.ui.work}</a></div></div>
+  <div class="hero-content"><h1 id="hero-heading" data-hero-title><Text value={c.hero.headline}/></h1><p data-hero-copy><Text value={c.hero.body}/></p><div class="hero-actions" data-hero-actions><a class="button" href={c.sectionOrder.includes('form')?'#lead':`/${c.lang}/#lead`}>{c.ui.book}</a><a class="button button-outline" href={c.sectionOrder.includes('portfolio')?'#work':`/${c.lang}/#work`}>{c.ui.work}</a></div></div>
 </section>
 

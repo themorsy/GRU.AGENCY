@@ -559,3 +559,43 @@ html[dir=rtl] .about-body,html[dir=rtl] .method-support,html[dir=rtl] .value-ite
 html[dir=rtl] .about-statement{font-size:var(--size-h2);line-height:1.55}
 html[dir=rtl] main>.section :is(.section-heading>h2,.lead-intro .section-heading>h2){font-family:var(--font-display);font-size:var(--size-h2);line-height:1.55;font-weight:700;letter-spacing:normal}
 @media(max-width:767px){html[dir=rtl] .hero h1{font-size:clamp(44px,12vw,48px);line-height:1.55}html[dir=rtl] .hero-content p{font-size:18px}html[dir=rtl] .stat-value{font-size:40px}}
+
+/* GRU motion concept. These styles only activate after site.ts opts in, so static and
+   reduced-motion visits always retain the approved visible layout. */
+.value-item[data-reveal],.method-card[data-reveal]{opacity:1;transform:none}
+html.motion-ready .value-item[data-reveal]:not(.is-revealed),html.motion-ready .method-card[data-reveal]:not(.is-revealed){opacity:0;transform:translateY(18px)}
+html.motion-ready [data-motion-reveal]{opacity:0;transform:translateY(18px);filter:blur(5px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1),filter .5s ease;transition-delay:var(--motion-delay,0ms)}
+html.motion-ready [data-motion-reveal].is-motion-revealed{opacity:1;transform:translateY(0);filter:blur(0)}
+html.motion-ready .section-heading[data-motion-reveal]{transform:translateY(16px)}
+.hero h1[data-hero-title] .motion-word{display:inline-block;overflow:hidden;vertical-align:top;padding-inline:2px}
+html.motion-ready .hero h1[data-hero-title] .motion-word>span{display:inline-block;opacity:0;filter:blur(10px);transition:transform 1.1s cubic-bezier(.19,1,.22,1),filter 1.1s cubic-bezier(.19,1,.22,1),opacity .9s ease;transition-delay:calc(var(--motion-index) * 60ms)}
+html.motion-ready .hero h1[data-hero-title] .motion-word-from-top>span{transform:translateY(-90%)}
+html.motion-ready .hero h1[data-hero-title] .motion-word-from-bottom>span{transform:translateY(90%)}
+html.motion-ready .hero h1[data-hero-title].is-motion-revealed .motion-word>span{opacity:1;filter:blur(0);transform:translateY(0)}
+html.motion-ready .hero-content :is([data-hero-copy],[data-hero-actions]){opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+html.motion-ready .hero-content [data-hero-copy].is-motion-revealed{opacity:1;transform:translateY(0);transition-delay:220ms}
+html.motion-ready .hero-content [data-hero-actions].is-motion-revealed{opacity:1;transform:translateY(0);transition-delay:340ms}
+.project-card{transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.project-card:hover,.project-card:focus-within{transform:translateY(-6px)}
+.service-pill{transition:color .2s ease,background .2s ease,border-color .2s ease,transform .2s ease}
+.service-pill:hover{transform:translateY(-2px)}
+.button{transition:color .2s ease,background .2s ease,border-color .2s ease,transform .2s ease}
+.button:hover{transform:translateY(-2px)}
+@media(prefers-reduced-motion:reduce){
+ html.motion-ready [data-motion-reveal],html.motion-ready .value-item[data-reveal],html.motion-ready .method-card[data-reveal],html.motion-ready .hero h1[data-hero-title] .motion-word>span,html.motion-ready .hero-content :is([data-hero-copy],[data-hero-actions]){opacity:1;transform:none;filter:none;transition:none}
+ .project-card:hover,.project-card:focus-within,.service-pill:hover,.button:hover{transform:none}
+}
+
+/* Header language control stays cream over the hero; its existing green state
+   remains in place once the header receives its cream scroll background. */
+.site-header:not(.is-scrolled) .header-actions .language{color:var(--cream)}
+
+/* On narrow screens the fifth Method item occupies the final row by itself.
+   Keep its approved card width, but distribute the remaining row space evenly. */
+@media(max-width:767px){.method-card:last-child{flex:0 1 200px;margin-inline:auto}}
+
+/* Arabic uses Sukar throughout. Retain the previously approved Arabic scale,
+   leading and RTL geometry; only the rendered typeface changes. */
+:root[lang=ar]{--font-primary:Sukar,sans-serif;--font-display:var(--font-primary);--font-body:var(--font-primary)}
+html[dir=rtl] :lang(ar){font-family:var(--font-primary)}
+html[dir=rtl] bdi[dir=ltr]{font-family:Poppins,system-ui,sans-serif;font-weight:400}

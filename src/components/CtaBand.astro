@@ -3,5 +3,5 @@ import type {CollectionEntry} from 'astro:content';
 interface Props {c:CollectionEntry<'locales'>['data']}
 const {c}=Astro.props;
 ---
-<section class="cta-band" aria-label={c.ui.book}><p class="display">{c.cta.statement}</p><a class="button button-cream" href={c.sectionOrder.includes('form')?'#lead':`/${c.lang}/#lead`}>{c.ui.book}</a></section>
+<section class="cta-band" aria-label={c.ui.book} data-motion-reveal="cta"><p class="display">{c.cta.statement}</p><a class="button button-cream" href={c.sectionOrder.includes('form')?'#lead':`/${c.lang}/#lead`}>{c.ui.book}</a></section>
 

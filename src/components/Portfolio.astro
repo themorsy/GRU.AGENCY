@@ -8,7 +8,7 @@ const featuredProjects=c.portfolio.projects.filter(project=>project.image).slice
 ---
 <section id="work" class="section portfolio" aria-labelledby="work-heading">
   <div class="portfolio-heading"><SectionHeading number={String(c.sectionOrder.filter(k=>!['hero','cta','proof'].includes(k)).indexOf('portfolio')+1).padStart(2,'0')} eyebrow={c.portfolio.eyebrow} title={c.portfolio.title} id="work-heading"/><div class="rail-controls"><button type="button" class="rail-arrow rail-previous" data-rail-previous aria-label={c.ui.previous}></button><button type="button" class="rail-arrow rail-next" data-rail-next aria-label={c.ui.next}></button></div></div>
-  <div class="project-grid" data-project-rail tabindex="0" role="region" aria-labelledby="work-heading">{featuredProjects.map((project,index)=><article class="project-card">
+  <div class="project-grid" data-project-rail tabindex="0" role="region" aria-labelledby="work-heading">{featuredProjects.map((project,index)=><article class="project-card" data-motion-reveal="card" style={`--motion-delay:${index * 80}ms`}>
     <a href={project.caseStudyUrl||`#${project.id}`} data-project-open={project.id} aria-haspopup="dialog" aria-controls="project-lightbox">
       <div class="project-visual">{project.image?<img src={project.image} alt={project.imageAlt||project.name} width="800" height="1000" loading="lazy" decoding="async"/>:<span>{c.portfolio.placeholder}</span>}<div class="project-scrim" aria-hidden="true"></div><div class="project-overlay"><p class="project-featured"><bdi dir="ltr">Featured {String(index+1).padStart(2,'0')}</bdi></p><div><h3>{project.name}</h3><p class="project-category">{project.category}</p></div></div></div>
     </a>
