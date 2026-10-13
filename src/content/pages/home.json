@@ -196,7 +196,7 @@
           {
             "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
             "name": "Branding",
-            "fullImage": "/assets/projects/project-1-3.webp",
+            "fullImage": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1791902011/ChatGPT_Image_Oct_13_2026_05_30_21_PM.png",
             "imageAlt": "Make It",
             "gallery": [
               {
