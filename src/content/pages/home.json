@@ -195,31 +195,37 @@
         "projects": [
           {
             "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
-            "name": "Make It",
+            "name": "Branding",
             "fullImage": "/assets/projects/project-1-3.webp",
             "imageAlt": "Make It",
             "gallery": [
               {
-                "src": "/assets/projects/project-1-1.webp",
+                "src": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1791901234/F14EC7E9-9551-4DFA-AEF6-6B7AFF4CB236.png",
                 "alt": "Make It",
                 "type": "image",
                 "poster": ""
               },
               {
-                "src": "/assets/projects/project-1-2.webp",
+                "src": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1791901233/BAD43F1D-6899-4E74-A0B3-7F05BAAF44C1.png",
                 "alt": "Make It",
                 "type": "image",
                 "poster": ""
               },
               {
-                "src": "/assets/projects/project-1-3.webp",
+                "src": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1791901233/4508B6BA-B8FD-4A7E-8670-1062C390C79A.png",
                 "alt": "Make It",
                 "type": "image",
                 "poster": ""
               },
               {
-                "src": "/assets/projects/project-1-4.webp",
+                "src": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1791901233/ED5DCC72-AF2D-43FD-881E-E37F65059A31.png",
                 "alt": "Make It",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1791901233/CA813B8A-85F3-4010-B066-C003BA997CCB.png",
+                "alt": "Branding Project",
                 "type": "image",
                 "poster": ""
               }
