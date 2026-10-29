@@ -268,7 +268,7 @@
             ],
             "caseStudyUrl": "",
             "id": "project-1",
-            "image": "/assets/projects/project-1-3.webp",
+            "image": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793287319/Teaser_2_green.png",
             "category": "Media Buying"
           },
           {
@@ -1303,5 +1303,5 @@
       "logoAlt": "GRU — Growth Marketing Agency"
     }
   },
-  "gtmId": "GTM-54CQR8HS"
+  "gtmId": ""
 }
