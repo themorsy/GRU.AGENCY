@@ -845,9 +845,9 @@
         "projects": [
           {
             "body": "ملخص دراسة حالة مؤقت. تدعم كل بطاقة اسم المشروع أو العميل وصورة وفئة الخدمة ورابطًا لصفحة دراسة حالة مستقبلية.",
-            "name": "Make It",
+            "name": "الهويات البصرية",
             "fullImage": "/assets/projects/project-1-3.webp",
-            "imageAlt": "Make It",
+            "imageAlt": "الهويات البصرية",
             "gallery": [
               {
                 "src": "/assets/projects/project-1-1.webp",
@@ -876,12 +876,12 @@
             ],
             "caseStudyUrl": "",
             "id": "project-1",
-            "image": "/assets/projects/project-1-3.webp",
+            "image": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793294432/Branding.png",
             "category": "شراء الوسائط"
           },
           {
             "body": "ملخص دراسة حالة مؤقت. تدعم كل بطاقة اسم المشروع أو العميل وصورة وفئة الخدمة ورابطًا لصفحة دراسة حالة مستقبلية.",
-            "name": "Make It Products",
+            "name": "الإنتاج الإعلامي",
             "fullImage": "/assets/projects/project-2-1.webp",
             "imageAlt": "Make It Products",
             "gallery": [
@@ -912,14 +912,14 @@
             ],
             "caseStudyUrl": "",
             "id": "project-2",
-            "image": "/assets/projects/project-2-1.webp",
+            "image": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793294432/Media_Production.png",
             "category": "استراتيجية العلامة"
           },
           {
             "body": "ملخص دراسة حالة مؤقت. تدعم كل بطاقة اسم المشروع أو العميل وصورة وفئة الخدمة ورابطًا لصفحة دراسة حالة مستقبلية.",
-            "name": "Natural Land",
-            "fullImage": "/assets/projects/project-3-2.webp",
-            "imageAlt": "Natural Land",
+            "name": "التسويق عبر وسائل التواصل",
+            "fullImage": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793294432/Social_Marketing.png",
+            "imageAlt": "محتوى ومؤثرين",
             "gallery": [
               {
                 "src": "/assets/projects/project-3-1.webp",
