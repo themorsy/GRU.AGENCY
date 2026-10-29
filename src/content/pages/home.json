@@ -195,42 +195,6 @@
         "projects": [
           {
             "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
-            "name": "Media Production",
-            "fullImage": "",
-            "imageAlt": "Make It Products",
-            "gallery": [
-              {
-                "src": "/assets/projects/project-2-1.webp",
-                "alt": "Make It Products",
-                "type": "image",
-                "poster": ""
-              },
-              {
-                "src": "/assets/projects/project-2-2.webp",
-                "alt": "Make It Products",
-                "type": "image",
-                "poster": ""
-              },
-              {
-                "src": "/assets/projects/project-2-3.webp",
-                "alt": "Make It Products",
-                "type": "image",
-                "poster": ""
-              },
-              {
-                "src": "/assets/projects/project-2-4.webp",
-                "alt": "Make It Products",
-                "type": "image",
-                "poster": ""
-              }
-            ],
-            "caseStudyUrl": "",
-            "id": "project-2",
-            "image": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793294432/Media_Production.png",
-            "category": "Comprehensive Media shootings"
-          },
-          {
-            "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
             "name": "Branding",
             "fullImage": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793287319/Teaser_2_green.png",
             "imageAlt": "Make It",
@@ -270,6 +234,42 @@
             "id": "project-1",
             "image": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793294432/Branding.png",
             "category": "Media Buying"
+          },
+          {
+            "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
+            "name": "Media Production",
+            "fullImage": "",
+            "imageAlt": "Make It Products",
+            "gallery": [
+              {
+                "src": "/assets/projects/project-2-1.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-2-2.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-2-3.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              },
+              {
+                "src": "/assets/projects/project-2-4.webp",
+                "alt": "Make It Products",
+                "type": "image",
+                "poster": ""
+              }
+            ],
+            "caseStudyUrl": "",
+            "id": "project-2",
+            "image": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793294432/Media_Production.png",
+            "category": "Comprehensive Media shootings"
           },
           {
             "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
