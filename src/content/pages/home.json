@@ -195,8 +195,8 @@
         "projects": [
           {
             "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
-            "name": "Make It Products",
-            "fullImage": "/assets/projects/project-2-1.webp",
+            "name": "Media Production",
+            "fullImage": "",
             "imageAlt": "Make It Products",
             "gallery": [
               {
@@ -226,8 +226,8 @@
             ],
             "caseStudyUrl": "",
             "id": "project-2",
-            "image": "/assets/projects/project-2-1.webp",
-            "category": "Brand Strategy"
+            "image": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793294432/Media_Production.png",
+            "category": "Comprehensive Media shootings"
           },
           {
             "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
@@ -268,13 +268,13 @@
             ],
             "caseStudyUrl": "",
             "id": "project-1",
-            "image": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793287319/Teaser_2_green.png",
+            "image": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793294432/Branding.png",
             "category": "Media Buying"
           },
           {
             "body": "Placeholder case-study summary. Each card supports a project or client name, a visual and a service category label, and links to a future dedicated case-study page.",
-            "name": "Natural Land",
-            "fullImage": "/assets/projects/project-3-2.webp",
+            "name": "Social Media",
+            "fullImage": "",
             "imageAlt": "Natural Land",
             "gallery": [
               {
@@ -304,7 +304,7 @@
             ],
             "caseStudyUrl": "",
             "id": "project-3",
-            "image": "/assets/projects/project-3-2.webp",
+            "image": "https://res.cloudinary.com/r8i4m3mq/image/upload/v1793294432/Social_Marketing.png",
             "category": "Social Content"
           },
           {
