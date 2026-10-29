@@ -5,10 +5,10 @@ import postcss from 'postcss';
 import {openSync} from 'fontkit';
 
 // Independent contract: removing a whole CSS family/weight must not silently shrink the gate.
-// Arabic Typesetting is supplied in one regular webfont file. Display headings use
-// browser-synthesized 700 because no licensed bold face exists; body/UI uses Sukar.
-export const expectedFonts={Mammoth:[400],Poppins:[300,400,500],Sukar:[400,700,900],'Arabic Typesetting':[400]};
-export const allowedSyntheticWeights={'Arabic Typesetting':[700]};
+// Sukar is the only public Arabic family. The supplied ArabicTypesetting file is retained
+// in src/assets/fonts but intentionally unused, so it is no longer part of the emitted contract.
+export const expectedFonts={Mammoth:[400],Poppins:[300,400,500],Sukar:[400,700,900]};
+export const allowedSyntheticWeights={};
 export function inspectAssets(root='dist'){
  const base=path.resolve(root),files=[];const walk=dir=>{for(const d of fs.readdirSync(dir,{withFileTypes:true})){const f=path.join(dir,d.name);if(d.isDirectory())walk(f);else files.push(f);}};walk(base);
  let count=0;const missing=[],references=new Set(),faces=[],coverage=new Map(),fontCache=new Map();
@@ -41,7 +41,7 @@ export function inspectAssets(root='dist'){
 }
 export function assertAssets(root='dist'){return inspectAssets(root).references;}
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
- const report=inspectAssets();console.log(`Verified ${report.references} CSS references; ${report.faces.length} font declarations with real WOFF2 family/weight coverage.`);
+ const report=inspectAssets(process.argv[2]||'dist');console.log(`Verified ${report.references} CSS references; ${report.faces.length} font declarations with real WOFF2 family/weight coverage.`);
  for(const asset of report.unused)console.log(`Retained unused asset: ${asset.path} (${asset.bytes} bytes)`);
  if(process.env.ASSET_REPORT_PATH)fs.writeFileSync(process.env.ASSET_REPORT_PATH,JSON.stringify(report,null,2));
 }

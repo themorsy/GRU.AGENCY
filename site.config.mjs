@@ -1,3 +1,5 @@
-// Preview origin; override SITE_URL at domain cutover.
-export const siteOrigin = new URL(process.env.SITE_URL || 'https://gru-agency.mod-morsy.workers.dev').origin;
-export const buildVersion = 'gru-v6-round10-cloudflare-cms-2026-09-14';
+// Production is the default origin so a release build is canonical and indexable on
+// gru.agency. Build the preview with `npm run build:preview` (or SITE_URL=...).
+export const productionOrigin = 'https://gru.agency';
+export const siteOrigin = new URL(process.env.SITE_URL || productionOrigin).origin;
+export const buildVersion = 'gru-v6-round11-release-candidate-2026-10-29';
