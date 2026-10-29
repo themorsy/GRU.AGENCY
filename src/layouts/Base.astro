@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import mammothUrl from '../assets/fonts/Mammoth.woff2?url';
 import {buildVersion} from '../../site.config.mjs';
 import WhatsApp from '../components/WhatsApp.astro';
+import {DEFAULT_GTM_ID,PRODUCTION_HOSTS,gtmEnabledForBuild,isProductionOrigin} from '../scripts/release';
 import '../styles/global.css';
 
 interface Props{c:CollectionEntry<'locales'>['data'];thanks?:boolean;slug?:string;languages?:('en'|'ar')[];gtmId?:string}
@@ -15,13 +16,69 @@ const description=thanks?c.thanks.body:c.seo.description;
 const socialTitle=thanks?title:(c.seo.socialTitle||title);
 const socialDescription=thanks?description:(c.seo.socialDescription||description);
 const canonical=c.seo.canonicalUrl?.startsWith('https://')?c.seo.canonicalUrl:origin+path;
-const gtm=gtmId||import.meta.env.PUBLIC_GTM_ID||'GTM-54CQR8HS';
-const gtmEnabled=!!gtm&&(import.meta.env.PUBLIC_GTM_ENABLED==='true'||!!gtmId);
+const gtm=gtmId||import.meta.env.PUBLIC_GTM_ID||DEFAULT_GTM_ID;
+// GTM ships only in the production-origin build, and the emitted loader also requires a
+// production hostname. Preview builds contain no tracking loader at all.
+const gtmBuildEnabled=gtmEnabledForBuild(origin,gtm);
+// A non-production build is noindex in its own markup too, so a preview cannot be
+// indexed even if it is served without the Worker in front of it.
+const noindex=thanks||!c.seo.indexable||!isProductionOrigin(origin);
+const pageType=thanks?'thank_you':slug?'landing_page':'homepage';
 const verification=import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 const schema={'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':origin+'/#organization',name:'GRU',url:origin,logo:origin+'/assets/logo-green.png',email:c.contact.email,telephone:c.contact.phone,sameAs:c.footer.socials.map(s=>s.href)},{'@type':'LocalBusiness','@id':origin+'/#business',name:'GRU',url:origin,telephone:c.contact.phone,email:c.contact.email,parentOrganization:{'@id':origin+'/#organization'},image:origin+'/assets/logo-green.png',areaServed:['Egypt','GCC','Europe']}]};
 ---
-<!doctype html><Fragment set:html={`<!-- BUILD: ${buildVersion} -->`}/><html lang={c.lang} dir={c.dir}><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><!-- Thank-you is a confirmation route, not a search landing page. -->
-{(thanks||!c.seo.indexable)&&<meta name="robots" content="noindex, follow"/>}<meta property="og:locale" content={c.lang==='ar'?'ar_AR':'en_US'}/><meta name="description" content={description}/><meta name="theme-color" content="#1F5B33"/><link rel="canonical" href={canonical}/>{languages.map(lang=><link rel="alternate" hreflang={lang} href={`${origin}/${lang}/${thanks?'thank-you/':slug?slug+'/':''}`}/>)}<link rel="alternate" hreflang="x-default" href={`${origin}/${languages.includes('en')?'en':languages[0]}/${thanks?'thank-you/':slug?slug+'/':''}`}/><meta property="og:type" content="website"/><meta property="og:site_name" content="GRU"/><meta property="og:title" content={socialTitle}/><meta property="og:description" content={socialDescription}/><meta property="og:url" content={canonical}/>{c.seo.socialImage&&<meta property="og:image" content={c.seo.socialImage}/>} {c.seo.socialImageAlt&&<meta property="og:image:alt" content={c.seo.socialImageAlt}/>}<meta name="twitter:card" content={c.seo.socialImage?'summary_large_image':'summary'}/><meta name="twitter:title" content={socialTitle}/><meta name="twitter:description" content={socialDescription}/>{c.seo.socialImage&&<meta name="twitter:image" content={c.seo.socialImage}/>}<link rel="icon" type="image/png" href="/assets/logo-green.png"/>{c.lang==='en'&&<link rel="preload" href={mammothUrl} as="font" type="font/woff2" crossorigin/>}{verification&&<meta name="google-site-verification" content={verification}/>}
+<!doctype html><Fragment set:html={`<!-- BUILD: ${buildVersion} -->`}/><html lang={c.lang} dir={c.dir}><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{title}</title><!-- Confirmation routes, drafts and non-production builds stay out of search. -->
+{noindex&&<meta name="robots" content="noindex, follow"/>}<meta property="og:locale" content={c.lang==='ar'?'ar_AR':'en_US'}/><meta name="description" content={description}/><meta name="theme-color" content="#1F5B33"/><link rel="canonical" href={canonical}/>{languages.map(lang=><link rel="alternate" hreflang={lang} href={`${origin}/${lang}/${thanks?'thank-you/':slug?slug+'/':''}`}/>)}<link rel="alternate" hreflang="x-default" href={`${origin}/${languages.includes('en')?'en':languages[0]}/${thanks?'thank-you/':slug?slug+'/':''}`}/><meta property="og:type" content="website"/><meta property="og:site_name" content="GRU"/><meta property="og:title" content={socialTitle}/><meta property="og:description" content={socialDescription}/><meta property="og:url" content={canonical}/>{c.seo.socialImage&&<meta property="og:image" content={c.seo.socialImage}/>} {c.seo.socialImageAlt&&<meta property="og:image:alt" content={c.seo.socialImageAlt}/>}<meta name="twitter:card" content={c.seo.socialImage?'summary_large_image':'summary'}/><meta name="twitter:title" content={socialTitle}/><meta name="twitter:description" content={socialDescription}/>{c.seo.socialImage&&<meta name="twitter:image" content={c.seo.socialImage}/>}<link rel="icon" type="image/png" href="/assets/logo-green.png"/>{c.lang==='en'&&<link rel="preload" href={mammothUrl} as="font" type="font/woff2" crossorigin/>}{verification&&<meta name="google-site-verification" content={verification}/>}
 <script is:inline type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g,'\\u003c')}/>
-<script is:inline define:vars={{gtm,gtmEnabled,pageLanguage:c.lang,pagePath:path,pageType:thanks?'thank_you':slug?'landing_page':'homepage'}}>window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_language:pageLanguage,page_path:pagePath,page_type:pageType});if(gtmEnabled&&!['localhost','127.0.0.1'].includes(location.hostname)){window.dataLayer.push({'gtm.start':Date.now(),event:'gtm.js'});const tag=document.createElement('script');tag.async=true;tag.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(gtm);document.head.appendChild(tag);}</script>
-</head><body data-page-type={thanks?'thank_you':slug?'landing_page':'homepage'} data-lang={c.lang} data-thanks={thanks?'true':undefined}>{gtmEnabled&&<noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${gtm}`} height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>}<a class="skip-link" href="#main">{c.ui.skip}</a><Header c={c} minimal={thanks} slug={slug} languages={languages}/><main id="main" tabindex="-1"><slot/></main><slot name="footer"/><WhatsApp c={c}/><script>import '../scripts/site';</script></body></html>
+{/* The showreel type reveal is scheduled here, before the render-blocking stylesheet, so
+    the H1 starts at 2.0s from navigation start regardless of module or CSS timing.
+    Reduced-motion and no-JS visits keep the approved headline visible with no motion. */}<script is:inline>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var root=document.documentElement;
+  root.classList.add('hero-motion');
+  var attempts=0;
+  function reveal(){
+    var title=document.getElementById('hero-heading');
+    if(!title){
+      if(attempts++<30){setTimeout(reveal,100);return;}
+      root.classList.remove('hero-motion');
+      return;
+    }
+    var label=(title.textContent||'').replace(/\s+/g,' ').trim();
+    if(label)title.setAttribute('aria-label',label);
+    var walker=document.createTreeWalker(title,NodeFilter.SHOW_TEXT,{acceptNode:function(node){return node.nodeValue&&node.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}});
+    var textNodes=[];
+    while(walker.nextNode())textNodes.push(walker.currentNode);
+    var wordIndex=0;
+    textNodes.forEach(function(node){
+      var fragment=document.createDocumentFragment();
+      (node.nodeValue||'').split(/(\s+)/).forEach(function(part){
+        if(!part)return;
+        if(/^\s+$/.test(part)){fragment.append(part);return;}
+        var word=document.createElement('span');
+        word.className='motion-word '+(wordIndex%2?'motion-word-from-bottom':'motion-word-from-top');
+        word.style.setProperty('--motion-index',String(wordIndex++));
+        word.setAttribute('aria-hidden','true');
+        var inner=document.createElement('span');
+        inner.textContent=part;
+        word.append(inner);
+        fragment.append(word);
+      });
+      node.replaceWith(fragment);
+    });
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        title.classList.add('is-motion-revealed');
+        setTimeout(function(){var copy=document.querySelector('[data-hero-copy]');if(copy)copy.classList.add('is-motion-revealed');},140);
+        setTimeout(function(){var actions=document.querySelector('[data-hero-actions]');if(actions)actions.classList.add('is-motion-revealed');},240);
+      });
+    });
+  }
+  // Schedule against navigation start so the headline enters at 2.0s even on a slower parse.
+  setTimeout(reveal,Math.max(0,2000-performance.now()));
+})();
+</script>
+<script is:inline define:vars={{pageLanguage:c.lang,pagePath:path,pageType}}>window.dataLayer=window.dataLayer||[];window.dataLayer.push({page_language:pageLanguage,page_path:pagePath,page_type:pageType});</script>
+{gtmBuildEnabled&&<script is:inline define:vars={{gtm,productionHosts:PRODUCTION_HOSTS}}>if(productionHosts.indexOf(location.hostname.toLowerCase())!==-1){window.dataLayer=window.dataLayer||[];window.dataLayer.push({'gtm.start':Date.now(),event:'gtm.js'});var tag=document.createElement('script');tag.async=true;tag.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(gtm);document.head.appendChild(tag);}</script>}
+</head><body data-page-type={pageType} data-lang={c.lang} data-thanks={thanks?'true':undefined}><a class="skip-link" href="#main">{c.ui.skip}</a><Header c={c} minimal={thanks} slug={slug} languages={languages}/><main id="main" tabindex="-1"><slot/></main><slot name="footer"/><WhatsApp c={c}/><script>import '../scripts/site';</script></body></html>

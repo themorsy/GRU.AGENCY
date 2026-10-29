@@ -4,11 +4,15 @@ import Text from './Text.astro';
 interface Props {c:CollectionEntry<'locales'>['data']}
 const {c}=Astro.props;
 ---
-<section class="hero" aria-labelledby="hero-heading">
-  {c.hero.poster&&<img class="hero-poster" src={c.hero.poster} width="1440" height="720" alt="" decoding="async" fetchpriority="high"/>}
-  {/* Client correction: video placement annotations are review-only, not website copy. */}
-  {c.hero.video&&<video class="hero-video" data-video data-desktop={c.hero.video} data-webm={c.hero.videoWebm} data-mobile={c.hero.videoMobile} poster={c.hero.poster} preload="none" muted loop playsinline aria-hidden="true" tabindex="-1"><source data-hero-webm type="video/webm"/><source data-hero-mp4 type="video/mp4"/></video>}
-  <div class="hero-overlay" aria-hidden="true"></div>
-  <div class="hero-content"><h1 id="hero-heading" data-hero-title><Text value={c.hero.headline}/></h1><p data-hero-copy><Text value={c.hero.body}/></p><div class="hero-actions" data-hero-actions><a class="button" href={c.sectionOrder.includes('form')?'#lead':`/${c.lang}/#lead`}>{c.ui.book}</a><a class="button button-outline" href={c.sectionOrder.includes('portfolio')?'#work':`/${c.lang}/#work`}>{c.ui.work}</a></div></div>
+<section class="hero" aria-labelledby="hero-heading" data-hero>
+  {/* Showreel media is a decorative background layer. It is absolutely positioned behind
+      the content grid, never a fixed overlay over the headline or the controls. */}
+  <div class="hero-media" aria-hidden="true">
+    {c.hero.poster&&<img class="hero-poster" src={c.hero.poster} width="1440" height="720" alt="" decoding="async" fetchpriority="high"/>}
+    {/* Client correction: video placement annotations are review-only, not website copy. */}
+    {c.hero.video&&<video class="hero-video" data-video data-desktop={c.hero.video} data-webm={c.hero.videoWebm} data-mobile={c.hero.videoMobile} poster={c.hero.poster} preload="metadata" muted loop playsinline aria-hidden="true" tabindex="-1"><source data-hero-webm type="video/webm"/><source data-hero-mp4 type="video/mp4"/></video>}
+    <div class="hero-overlay"></div>
+    <span class="hero-frame"></span>
+  </div>
+  <div class="hero-content"><h1 id="hero-heading" data-hero-title><Text value={c.hero.headline}/></h1><div class="hero-support"><p data-hero-copy><Text value={c.hero.body}/></p><div class="hero-actions" data-hero-actions><a class="button" href={c.sectionOrder.includes('form')?'#lead':`/${c.lang}/#lead`}>{c.ui.book}</a><a class="button button-outline" href={c.sectionOrder.includes('portfolio')?'#work':`/${c.lang}/#work`}>{c.ui.work}</a></div></div></div>
 </section>
-

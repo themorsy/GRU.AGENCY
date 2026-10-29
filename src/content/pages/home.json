@@ -489,10 +489,10 @@
       "hero": {
         "headline": "We Don't Sell Tactics, We Sell Strategies to Grow",
         "body": "We combines strategy, creative, performance and production to help businesses make better marketing decisions, reduce wasted effort and turn marketing into measurable growth.",
-        "video": "/assets/hero/hero-desktop-1152x576.mp4",
-        "poster": "/assets/hero/hero-poster-1440x720.jpg",
-        "videoWebm": "/assets/hero/hero-desktop-1152x576.webm",
-        "videoMobile": "/assets/hero/hero-mobile-576x1024.mp4"
+        "video": "/assets/hero/showreel-desktop-1024x576.mp4",
+        "poster": "/assets/hero/showreel-poster-1440x720.jpg",
+        "videoWebm": "/assets/hero/showreel-desktop-1024x576.webm",
+        "videoMobile": "/assets/hero/showreel-mobile-576x1024.mp4"
       },
       "id": "en",
       "footer": {
@@ -1133,10 +1133,10 @@
       "hero": {
         "headline": "تسويق مبني على النمو، لا على التخمين.",
         "body": "GRU وكالة تسويق رقمي متكاملة في مصر، تساعد الشركات في مصر ودول الخليج على النمو من خلال الاستراتيجية، المحتوى، الإعلانات، العلامات التجارية، التجارة الإلكترونية والإنتاج.",
-        "video": "/assets/hero/hero-desktop-1152x576.mp4",
-        "poster": "/assets/hero/hero-poster-1440x720.jpg",
-        "videoWebm": "/assets/hero/hero-desktop-1152x576.webm",
-        "videoMobile": "/assets/hero/hero-mobile-576x1024.mp4"
+        "video": "/assets/hero/showreel-desktop-1024x576.mp4",
+        "poster": "/assets/hero/showreel-poster-1440x720.jpg",
+        "videoWebm": "/assets/hero/showreel-desktop-1024x576.webm",
+        "videoMobile": "/assets/hero/showreel-mobile-576x1024.mp4"
       },
       "id": "ar",
       "footer": {
